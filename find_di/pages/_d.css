@@ -18,8 +18,8 @@ body {
 }
 
 .logo img {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 }
 
 .nav-menu {
@@ -27,15 +27,6 @@ body {
     align-items: center;
     gap: 15px;
     font-size: 16px;
-}
-
-.cuha-button {
-    border: 1px solid #3399ff;
-    color: #3399ff;
-    background: transparent;
-    padding: 5px 15px;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .divider {
