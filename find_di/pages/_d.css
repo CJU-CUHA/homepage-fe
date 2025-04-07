@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.main-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-bottom: 1px solid #ccc;
+    background-color: white;
+}
+
+.logo img {
+    width: 100px;
+    height: 100px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+}
+
+.cuha-button {
+    border: 1px solid #3399ff;
+    color: #3399ff;
+    background: transparent;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background-color: black;
+}
+
+.click-me {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth {
+    font-size: 14px;
+}
+
+.auth span {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.sep {
+    color: #999;
+    margin: 0 5px;
+}
