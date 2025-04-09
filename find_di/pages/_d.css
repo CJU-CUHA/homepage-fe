@@ -206,7 +206,13 @@
   }
 
   .auth a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+  }
+
+  .auth-button {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
   }
   
   .sep {

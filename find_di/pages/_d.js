@@ -13,3 +13,29 @@ document.querySelector('.click-me').addEventListener('click', () => {
     }
   });
   
+  document.addEventListener("DOMContentLoaded", function () {
+    const authToggle = document.getElementById("authToggle");
+  
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  
+    updateAuthText();
+  
+    authToggle.addEventListener("click", function (e) {
+      e.preventDefault(); 
+  
+      if (isLoggedIn) {
+        isLoggedIn = false;
+        localStorage.setItem("isLoggedIn", "false");
+      } else {
+        isLoggedIn = true;
+        localStorage.setItem("isLoggedIn", "true");
+      }
+  
+      updateAuthText();
+    });
+  
+    function updateAuthText() {
+      authToggle.textContent = isLoggedIn ? "로그아웃" : "로그인";
+    }
+  });
+  
