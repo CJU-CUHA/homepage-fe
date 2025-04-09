@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="daol.css" />
+    </head>
+    <body>
+       <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>믹서기로 갈고 있는 중입니다...</p>
+       </div> 
+
+       <div id="main-content" style="display: none;">
+       </div>
+    <script>
+        window.addEventListener("load", function () {
+            const loading = document.getElementById("loading");
+            const content = document.getElementById("main-content");
+
+            loading.style.display = "none";
+            content.style.display = "block";
+        });
+    </script>
+    </body>
+</html>
