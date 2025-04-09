@@ -1,7 +1,7 @@
 // src/components/ClubBanner.jsx
 import React from "react";
 import "./../styles/ClubBanner.css";
-import logo from "./../pages/cu.png";
+import logo from "pages/cu.png";
 
 function ClubBanner() {
   const handleClick = () => {
