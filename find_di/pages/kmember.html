@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>회원가입</title>
-         <link rel="stylesheet" href="kmember.css" />
-    </head>
-    <body>
-        <div class="login-container">
-            <h2>회원가입</h2>
-                <input type="text" name="username" placeholder="아이디" required>
-                <input type="password" name="password" placeholder="비밀번호" required>
-                <input type="email" name="email" placeholder="이메일" required>
-                <select id="lang">
-                    <option value=" ">부서</option>
-                    <option value="se">보안부</option>
-                    <option value="de">개발부</option>
-                    <option value="hu">인사부</option>
-                    <option value="mo">총무부</option>
-                </select>
-                <button type="submit">회원가입</button>
-            </form>
-        </div>
-        <script src="app.js"></script>
-
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="kmember.css" />
+</head>
+<body>
+    <div class="login-container">
+        <h2>회원가입</h2>
+        <form id="signup-form">
+            <input type="text" name="username" placeholder="아이디" required minlength="5" maxlength="20">
+            <p id="username-error" style="color: red; display: none;"></p>
+            <input type="password" name="password" placeholder="비밀번호" required minlength="8" maxlength="20">
+            <p id="password-error" style="color: red; display: none;"></p>
+            <input type="password" name="confirm-password" placeholder="비밀번호 확인" required minlength="8" maxlength="20">
+            <p id="confirm-password-error" style="color: red; display: none;"></p>
+            <input type="email" name="email" placeholder="이메일" required>
+            <p id="email-error" style="color: red; display: none;"></p>
+            <select id="lang" name="department" required>
+                <option value="">부서</option>
+                <option value="se">보안부</option>
+                <option value="de">개발부</option>
+                <option value="hu">인사부</option>
+                <option value="mo">총무부</option>
+            </select>
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+    <script src="kmember.js"></script>
+</body>
 </html>
