@@ -2,54 +2,55 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Arial', sans-serif;
-}
-
-.main-banner {
+  }
+  
+  .main-banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px 30px;
     border-bottom: 1px solid #ccc;
     background-color: white;
-}
-
-.logo img {
+  }
+  
+  .logo img {
     width: 70px;
     height: 70px;
-}
-
-.nav-menu {
+  }
+  
+  .nav-menu {
     display: flex;
     align-items: center;
     gap: 15px;
     font-size: 16px;
-}
-
-.divider {
+  }
+  
+  .divider {
     width: 1px;
     height: 20px;
     background-color: black;
-}
-
-.click-me {
+  }
+  
+  .click-me {
     cursor: pointer;
     font-weight: bold;
-}
-
-.auth {
+  }
+  
+  .auth {
     font-size: 14px;
-}
-
-.auth span {
+  }
+  
+  .auth span {
     margin-left: 5px;
     cursor: pointer;
-}
-
-.sep {
+  }
+  
+  .sep {
     color: #999;
     margin: 0 5px;
-}
+  }
+  

@@ -1,7 +1,7 @@
 // src/components/ClubBanner.jsx
 import React from "react";
-import "./../styles/ClubBanner.css";
-import logo from "pages/cu.png";
+import "pages/ClubBanner.css";
+import logo from "./cu.png";
 
 function ClubBanner() {
   const handleClick = () => {
@@ -23,9 +23,9 @@ function ClubBanner() {
         <div className="divider"></div>
         <span>MINECRAFT</span>
         <div className="divider"></div>
-        <span className="click-me" onClick={handleClick}>
+        <button className="click-me" onClick={handleClick}>
           Click Me
-        </span>
+        </button>
       </nav>
 
       <div className="auth">
