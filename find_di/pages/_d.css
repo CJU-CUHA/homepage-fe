@@ -107,13 +107,13 @@
   }
  
   .close {
-    color: #ccc;
+    color: #121212;
   }
 
   .close:hover,
   .close:focus {
-    color: #fff;
-    background-color: black;
+    color: black;
+    background-color: white;
   }
  }
 
@@ -182,7 +182,7 @@
     font-weight: bold;
     cursor: pointer;
     float: right;
-    color: #aaa;
+    color: #121212;
   }
   
   .close:hover,
