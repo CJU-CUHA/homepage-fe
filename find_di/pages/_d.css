@@ -43,6 +43,7 @@
     body {
         background-color: #121212;
         color: #eee;
+        .nav-menu a,
         .nav-menu span,
         .nav-menu button {
             color: #ffffff;
@@ -156,7 +157,7 @@
   .modal-content p {
     color: black;
   }
-  
+
   .modal-content {
     background-color: #fff;
     margin: 15% auto;
