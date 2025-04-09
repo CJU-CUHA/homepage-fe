@@ -198,9 +198,15 @@
     gap: 5px;
   }
   
-  .auth span {
+  .auth a {
     margin-left: 5px;
     cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .auth a:hover {
+    text-decoration: underline;
   }
   
   .sep {
