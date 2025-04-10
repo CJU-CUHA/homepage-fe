@@ -13,7 +13,25 @@ document.querySelector('.click-me').addEventListener('click', () => {
     }
   });
 
+  document.addEventListener("DOMContentLoaded", function () {
+    const authToggle = document.getElementById("authToggle");
   
+    let isLoggedIn = false;
+  
+    authToggle.addEventListener("click", function (e) {
+      e.preventDefault(); //링크 이동x
+  
+      isLoggedIn = !isLoggedIn;
+  
+      if (isLoggedIn) {
+        authToggle.textContent = "로그아웃";
+      } else {
+        authToggle.textContent = "로그인";
+      }
+    });
+  });
+  
+
 document.addEventListener("DOMContentLoaded", () => {
   const authToggle = document.getElementById("authToggle");
 
