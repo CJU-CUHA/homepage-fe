@@ -132,6 +132,16 @@
     font-size: 16px;
   }
 
+.nav-menu a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-menu a:hover {
+  text-decoration: underline;
+}
+
   .divider {
     width: 1px;
     height: 20px;
