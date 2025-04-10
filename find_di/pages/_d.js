@@ -12,3 +12,22 @@ document.querySelector('.click-me').addEventListener('click', () => {
       modal.style.display = 'none';
     }
   });
+
+  
+document.addEventListener("DOMContentLoaded", () => {
+  const authToggle = document.getElementById("authToggle");
+
+  
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    authToggle.textContent = "로그아웃";
+    authToggle.href = "#"; 
+
+    authToggle.addEventListener("click", (e) => {
+      e.preventDefault()
+
+      localStorage.removeItem("isLoggedIn");
+      
+      window.location.href = "index.html";
+    });
+  }
+});
