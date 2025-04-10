@@ -1,38 +1,64 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Arial', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-banner {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  padding: 15px 30px;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.logo img {
+  width: 100px;
+  height: 100px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 16px;
+}
+
+.cuha-button {
+  border: 1px solid #3399ff;
+  color: #3399ff;
+  background: transparent;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: black;
+}
+
+.click-me {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth {
+  font-size: 14px;
+}
+
+.auth span {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.sep {
+  color: #999;
+  margin: 0 5px;
 }
