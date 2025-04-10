@@ -1,20 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Congratulation</title>
-         <link rel="stylesheet" href="kcongratulation.css" />
-    </head>
-    <body>
-        <div class="login-container">
-            <h2>Congratulation</h2>
-                <div>
-                    <t style="border: solid"></t>
-                </div>
-            </form>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="kcongratulation.css">
+    <title>페이지 전환</title>
+    <style>
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* 버튼을 가운데 정렬 */
+        }
+        .arrow-button {
+            margin: 0 5px;
+            padding: 5px 10px; /* 패딩을 줄여서 버튼 크기 감소 */
+            font-size: 14px; /* 폰트 크기를 줄여서 버튼 크기 감소 */
+        }
+        .page-button {
+            margin: 0 3px; /* 버튼 간격 조정 */
+            padding: 5px 10px; /* 패딩을 줄여서 버튼 크기 감소 */
+            font-size: 14px; /* 폰트 크기를 줄여서 버튼 크기 감소 */
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="box">
+            <img src="sujang.png" alt="페이지 1 이미지" class="image" style="width: 400px; height: 300px;">
+            <h1>수장님의 보석함</h1>
+            <p>청주대 디지털보안학과에 존재하는 CUHA 회장 서종찬 수장님의 개인 게시판이다.</p>
+            <div class="pagination">
+                <button class="arrow-button" id="prev">◀</button>
+                <div id="page-buttons"></div>
+                <button class="arrow-button" id="next">▶</button>
+            </div>
         </div>
-        <script src="app.js"></script>
+    </div>
+    
+    <script src="congratulation.js"></script>
+    <script>
+        const totalPages = 100; // 총 페이지 수
+        const buttonsPerPage = 10; // 한 번에 보여줄 버튼 수
+        let currentPage = 1; // 현재 페이지
 
-    </body>
+        const pageButtonsContainer = document.getElementById('page-buttons');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        function renderPageButtons() {
+            pageButtonsContainer.innerHTML = ''; // 기존 버튼 제거
+            const startPage = Math.floor((currentPage - 1) / buttonsPerPage) * buttonsPerPage + 1;
+            const endPage = Math.min(startPage + buttonsPerPage - 1, totalPages);
+
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.className = 'page-button';
+                button.textContent = i;
+                button.setAttribute('data-page', i);
+                button.addEventListener('click', () => {
+                    // 페이지 전환 로직
+                    window.location.href = `page${i}.html`; // 페이지 이동
+                });
+                pageButtonsContainer.appendChild(button);
+            }
+        }
+
+        function updateButtons() {
+            prevButton.disabled = currentPage <= 1;
+            nextButton.disabled = currentPage >= totalPages;
+            renderPageButtons();
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage -= buttonsPerPage;
+                updateButtons();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage += buttonsPerPage;
+                updateButtons();
+            }
+        });
+
+        // 초기 버튼 렌더링
+        updateButtons();
+    </script>
+</body>
 </html>
