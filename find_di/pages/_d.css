@@ -2,63 +2,235 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Arial', sans-serif;
-}
+    background-color: white;
+    color: black;
+  }
 
-.main-banner {
+  .main-banner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 30px;
+    padding: 12px 24px;
     border-bottom: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .content {
+    margin-top: 80px;
+    padding: 20px;
+  }
+
+  img, .logo, .main-banner {
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+ 
+  @media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #eee;
+        .nav-menu a,
+        .nav-menu span,
+        .nav-menu button {
+            color: #ffffff;
+        }
+    }
+
+    header {
+        background-color: #1e1e1e;
+        color: #f0f0f0;
+    }
+  .button {
+    background-color: black;
+    color: white;
+  }
+
+  .main-banner {
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .divider {
+    background-color: #555;
+  }
+
+  .logo img {
+    filter: invert(1);
+  }
+
+  .nav-menu {
+    background-color: #2a2a2a;
+  }
+
+  .nav-menu span,
+  .nav-menu a,
+  .auth span,
+  .click-me {
+    color: #f0f0f0;
+  }
+
+  .click-me {
+    background-color: #333;
+  }
+
+  click-me:hover {
+    background-color: #444;
+  }
+
+  .modal-content {
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #444;
+  }
+
+  .modal-content p {
+    color: #f0f0f0;
+  }
+
+  .modal-content button {
+    background-color: #333;
+    color: #fff;
+  }
+ 
+  .close {
+    color: #121212;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
     background-color: white;
-}
+  }
+ }
 
-.logo img {
-    width: 100px;
-    height: 100px;
-}
-
-.nav-menu {
+  .logo img {
+    width: 40px;
+    height: 40px;
+    user-select: none;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  
+  .nav-menu {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     font-size: 16px;
-}
+  }
 
-.cuha-button {
-    border: 1px solid #3399ff;
-    color: #3399ff;
-    background: transparent;
-    padding: 5px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.divider {
+  .divider {
     width: 1px;
     height: 20px;
     background-color: black;
-}
-
-.click-me {
+  }
+  
+  .click-me {
     cursor: pointer;
     font-weight: bold;
-}
+  }
 
-.auth {
-    font-size: 14px;
-}
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content p {
+    color: black;
+  }
 
-.auth span {
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    border: 1px solid #888;
+  }
+
+  .modal-content button {
+    background-color: #ffffff;
+    color: black;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+    color: #121212;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  a:visited {
+    color: inherit;
+  }
+
+  a:hover, a:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .auth {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .auth a {
     margin-left: 5px;
     cursor: pointer;
-}
+    color: inherit;
+    text-decoration: none;
+  }
 
-.sep {
+  .auth a:hover {
+    text-decoration: none;
+  }
+
+  .auth-button {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .sep {
     color: #999;
     margin: 0 5px;
-}
+  }
