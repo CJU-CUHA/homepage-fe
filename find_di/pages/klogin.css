@@ -34,7 +34,7 @@ input[type="password"] {
 button {
     width: 100%; /* 너비를 100%로 설정 */
     padding: 10px;
-    background-color: #000000;
+    background-color: #a8c2db;
     color: white;
     border: none;
     border-radius: 4px;
@@ -42,7 +42,7 @@ button {
 }
 
 button:hover {
-    background-color: #000000;
+    background-color: #266cad;
 }
 
 .find-credentials {
@@ -51,7 +51,7 @@ button:hover {
 }
 
 .find-link {
-    color: #000000;
+    color: #266cad;
     text-decoration: none;
 }
 
