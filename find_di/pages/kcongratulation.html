@@ -5,35 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>수장님의 보석함</title>
     <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+        }
+    
+        .image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .image:hover {
+            transform: scale(1.03);
+        }
+    
+        .box {
+            text-align: center;
+            padding: 20px;
+        }
+    
+        .box h1 {
+            font-size: 28px;
+            font-family: 'Pretendard', sans-serif;
+            color: #333;
+            margin-top: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+        }
+    
+        .box p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+    
         .pagination {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 5px;
         }
+    
         .arrow-button, .page-button {
-            margin: 0 5px;
-            padding: 5px 10px;
+            border: none;
+            background: #eee;
+            border-radius: 6px;
+            padding: 6px 12px;
             font-size: 14px;
+            transition: background 0.3s;
+            cursor: pointer;
         }
-        .image {
-            width: 400px;
-            height: 300px;
+    
+        .page-button:hover,
+        .arrow-button:hover {
+            background: #ccc;
         }
-        .box {
-            text-align: center;
+    
+        .page-button:active {
+            background: #999;
+            color: white;
         }
+        .fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
     </style>
+    
 </head>
 <body>
     <div class="content" id="content">
-        <!-- 여기에 페이지별 내용이 동적으로 들어감 -->
+        // 여기에 페이지별 내용이 동적으로 들어감
     </div>
 
     <div class="pagination">
-        <button class="arrow-button" id="prev">◀</button>
-        <div id="page-buttons"></div>
-        <button class="arrow-button" id="next">▶</button>
-    </div>
+    <button class="arrow-button" id="first">≪</button>
+    <button class="arrow-button" id="prev">◀</button>
+    <div id="page-buttons"></div>
+    <button class="arrow-button" id="next">▶</button>
+    <button class="arrow-button" id="last">≫</button>
+</div>
+
 
     <script>
         const totalPages = 100;
@@ -45,8 +102,10 @@
         const pageButtonsContainer = document.getElementById('page-buttons');
         const prevButton = document.getElementById('prev');
         const nextButton = document.getElementById('next');
+        const firstButton = document.getElementById('first');
+        const lastButton = document.getElementById('last');
 
-        // ✅ 페이지별 콘텐츠 데이터
+        //  페이지별 콘텐츠 데이터
         const contentData = {
             1: {
                 img: 'sujang.png',
@@ -99,26 +158,48 @@
                     renderContent(i);
                     renderPageButtons();
                 });
+                firstButton.addEventListener('click', () => {
+        currentPage = 1;
+        currentButtonGroup = 0;
+        renderContent(currentPage);
+        renderPageButtons();
+    });
+
+        lastButton.addEventListener('click', () => {
+        currentPage = totalPages;
+        currentButtonGroup = Math.floor((totalPages - 1) / buttonsPerPage);
+        renderContent(currentPage);
+        renderPageButtons();
+    });
+
                 pageButtonsContainer.appendChild(button);
             }
 
             prevButton.disabled = currentButtonGroup === 0;
             nextButton.disabled = (currentButtonGroup + 1) * buttonsPerPage >= totalPages;
         }
+        document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' && currentPage < totalPages) {
+    currentPage++;
 
-        prevButton.addEventListener('click', () => {
-            if (currentButtonGroup > 0) {
-                currentButtonGroup--;
-                renderPageButtons();
-            }
-        });
+    //  현재 페이지에 맞게 버튼 그룹도 업데이트
+    currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
 
-        nextButton.addEventListener('click', () => {
-            if ((currentButtonGroup + 1) * buttonsPerPage < totalPages) {
-                currentButtonGroup++;
-                renderPageButtons();
-            }
-        });
+    renderContent(currentPage);
+    renderPageButtons();
+  }
+
+  if (e.key === 'ArrowLeft' && currentPage > 1) {
+    currentPage--;
+
+    //  현재 페이지에 맞게 버튼 그룹도 업데이트
+    currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
+
+    renderContent(currentPage);
+    renderPageButtons();
+  }
+});
+
 
         // 최초 초기화
         renderContent(currentPage);
