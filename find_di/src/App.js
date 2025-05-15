@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import logo from './img/cu.png';
-import './App.css';
+import './banner.css';
 
 
 function App() {
@@ -11,7 +11,6 @@ function App() {
             <img src={logo} alt="logo" width="30px"></img>
         </div>
         <nav class="nav-menu">
-            <button className="cuha-button">CUHA</button>
             <span>CTF Time</span>
             <div className="divider"></div>
             <span>WAR GAME</span>
