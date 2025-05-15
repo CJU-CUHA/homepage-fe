@@ -1,33 +1,33 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import logo from './img/cu.png';
 import './App.css';
+
 
 function App() {
   return (
     <div className="App">
-      <header class="main-banner">
-        <div class="logo">
-            <img src="./cuha.png" alt="logo"></img>
+      <header className="main-banner">
+        <div className="logo">
+            <img src={logo} alt="logo" width="30px"></img>
         </div>
         <nav class="nav-menu">
-            <button class="cuha-button">CUHA</button>
+            <button className="cuha-button">CUHA</button>
             <span>CTF Time</span>
-            <div class="divider"></div>
+            <div className="divider"></div>
             <span>WAR GAME</span>
-            <div class="divider"></div>
+            <div className="divider"></div>
             <span>CUHA WIKI</span>
-            <div class="divider"></div>
+            <div className="divider"></div>
             <span>MINECRAFT</span>
-            <div class="divider"></div>
-            <span class="click-me">Click Me</span>
+            <div className="divider"></div>
+            <span className="click-me">Click Me</span>
         </nav>
-        <div class="auth">
-            <span class="login">로그인</span>
-            <span class="sep">|</span>
-            <span class="signup">회원가입</span>
+        <div className="auth">
+            <span className="login">로그인</span>
+            <span className="sep">|</span>
+            <span className="signup">회원가입</span>
         </div>
     </header>
-
-    <script src="_d.js"></script>
     </div>
   );
 }
