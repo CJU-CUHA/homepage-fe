@@ -1,57 +1,70 @@
-// 게시물 로드 함수
-function loadPosts() {
-    const posts = JSON.parse(localStorage.getItem('posts')) || [];
-    posts.forEach(post => {
-        addPostToDOM(post.title, post.content);
+document.addEventListener("DOMContentLoaded", function () {
+    const postForm = document.getElementById("postForm");
+    const postTitle = document.getElementById("postTitle");
+    const postContent = document.getElementById("postContent");
+    const postsDiv = document.getElementById("posts");
+    const searchInput = document.getElementById("searchInput");
+
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    function saveToLocalStorage() {
+        localStorage.setItem("posts", JSON.stringify(posts));
+    }
+
+    function renderPosts(postArray) {
+        postsDiv.innerHTML = "";
+        postArray.forEach(post => {
+            const postEl = document.createElement("div");
+            postEl.className = "post";
+            postEl.innerHTML = `
+                <h2>${post.title}</h2>
+                <p>${post.content}</p>
+                <button class="delete-button" data-id="${post.id}">삭제</button>
+            `;
+            postsDiv.appendChild(postEl);
+        });
+
+        // 삭제 이벤트 등록
+        document.querySelectorAll(".delete-button").forEach(button => {
+            button.addEventListener("click", function () {
+                const id = parseInt(this.getAttribute("data-id"));
+                posts = posts.filter(p => p.id !== id);
+                saveToLocalStorage();
+                renderPosts(posts);
+            });
+        });
+    }
+
+    // 게시물 초기 로딩
+    renderPosts(posts);
+
+    // 게시물 작성
+    postForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const title = postTitle.value.trim();
+        const content = postContent.value.trim();
+
+        if (title && content) {
+            const post = {
+                id: Date.now(),
+                title,
+                content
+            };
+            posts.unshift(post);
+            saveToLocalStorage();
+            renderPosts(posts);
+            postTitle.value = "";
+            postContent.value = "";
+        }
     });
-}
 
-// 게시물 추가 함수
-function addPostToDOM(title, content) {
-    const postDiv = document.createElement('div');
-    postDiv.className = 'post';
-    postDiv.innerHTML = `
-        <h2>${title}</h2>
-        <p>${content}</p>
-        <button class="delete-button">삭제</button>
-    `;
-
-    // 삭제 버튼 클릭 시 게시물 삭제
-    postDiv.querySelector('.delete-button').addEventListener('click', function() {
-        postDiv.remove();
-        deletePostFromLocalStorage(title); // 로컬 스토리지에서 삭제
+    // 검색 기능
+    searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+        const filtered = posts.filter(post =>
+            post.title.toLowerCase().includes(query) ||
+            post.content.toLowerCase().includes(query)
+        );
+        renderPosts(filtered);
     });
-
-    // 게시물 추가
-    document.getElementById('posts').appendChild(postDiv);
-}
-
-// 로컬 스토리지에서 게시물 삭제 함수
-function deletePostFromLocalStorage(title) {
-    const posts = JSON.parse(localStorage.getItem('posts')) || [];
-    const updatedPosts = posts.filter(post => post.title !== title);
-    localStorage.setItem('posts', JSON.stringify(updatedPosts));
-}
-
-// 폼 제출 이벤트 리스너
-document.getElementById('postForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // 폼 제출 기본 동작 방지
-
-    const title = document.getElementById('postTitle').value;
-    const content = document.getElementById('postContent').value;
-
-    // 게시물 저장
-    const posts = JSON.parse(localStorage.getItem('posts')) || [];
-    posts.push({ title, content });
-    localStorage.setItem('posts', JSON.stringify(posts));
-
-    // 게시물 추가
-    addPostToDOM(title, content);
-
-    // 입력 필드 초기화
-    document.getElementById('postTitle').value = '';
-    document.getElementById('postContent').value = '';
 });
-
-// 페이지 로드 시 게시물 불러오기
-loadPosts();
