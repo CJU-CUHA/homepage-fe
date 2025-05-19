@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import logo from './img/cu.png';
-import './App.css';
+import './banner.css';
+import Login from './component/login.js';
+import PostForm from './component/PostForm.js';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -67,9 +69,9 @@ function App() {
   const authSection = React.createElement(
     'div',
     { className: 'auth' },
-    React.createElement('a', { href: 'klogin.html', className: 'login' }, '로그인'),
+    React.createElement(Login),
     React.createElement('span', { className: 'sep' }, '|'),
-    React.createElement('a', { href: 'kmember.html', className: 'signup' }, '회원가입')
+    React.createElement(PostForm)
   );
 
   const modal = showModal

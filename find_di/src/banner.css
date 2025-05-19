@@ -218,16 +218,20 @@
 
   a {
     text-decoration: none;
-    color: inherit;
+    color: black;
   }
 
   a:visited {
-    color: inherit;
+    color: black;
   }
 
   a:hover, a:focus {
     text-decoration: none;
-    color: inherit;
+    color: black;
+  }
+
+  a:active {
+    text-decoration: none;
   }
 
   .auth {
@@ -239,7 +243,7 @@
   .auth a {
     margin-left: 5px;
     cursor: pointer;
-    color: inherit;
+    color: black;
     text-decoration: none;
   }
 
@@ -250,10 +254,29 @@
   .auth-button {
     cursor: pointer;
     text-decoration: none;
-    color: inherit;
+    color: black;
   }
   
   .sep {
     color: #999;
     margin: 0 5px;
   }
+
+  .loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loading-spinner {
+  font-size: 20px;
+  color: #3399ff;
+  font-weight: bold;
+}
