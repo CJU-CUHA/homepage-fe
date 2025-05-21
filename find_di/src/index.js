@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+// import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SignupForm from './SignupForm';
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <SignupForm></SignupForm>
+    {/* <SignupForm></SignupForm> */}
   </React.StrictMode>
 );
