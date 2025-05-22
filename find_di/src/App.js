@@ -1,43 +1,27 @@
-// import SignupForm from './SignupForm';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Main from './pages/Main';
 import Login from './components/Login';
-// import logo from './logo.svg';
-import PostForm from "./components/PostForm";
-import PostList from "./components/PostList";
-import PostItem from "./components/PostItem";
+import SignupForm from './SignupForm';
+import Footer from './components/Footer';
+import Dev from './pages/Dev';
+import Load from './Load';
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
 function App() {
   return (
-    <div className="App">
-
-
-      <header class="main-banner">
-        <div class="logo">
-            <img src="./cuha.png" alt="logo"></img>
-        </div>
-        <nav class="nav-menu">
-            <button class="cuha-button">CUHA</button>
-            <span>CTF Time</span>
-            <div class="divider"></div>
-            <span>WAR GAME</span>
-            <div class="divider"></div>
-            <span>CUHA WIKI</span>
-            <div class="divider"></div>
-            <span>MINECRAFT</span>
-            <div class="divider"></div>
-            <span class="click-me">Click Me</span>
-        </nav>
-        <div class="auth">
-            <span class="login">로그인</span>
-            <span class="sep">|</span>
-            <span class="signup">회원가입</span>
-        </div>
-    </header>
-
-    <script src="_d.js"></script>
-    <JangbalCity />
-    </div>
-    
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/Main" element={<Main/>} />
+        <Route path="/Dev" element={<Dev />} />
+        <Route path="/Login" element={<Login/>} />
+        <Route path="/SignupForm" element={<SignupForm />} />
+        <Route path="/Load" element={<Load/>} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
