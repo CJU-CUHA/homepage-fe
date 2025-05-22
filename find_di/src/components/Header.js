@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import cuhaLogo from '../img/cu.png';
 
 function Header() {
