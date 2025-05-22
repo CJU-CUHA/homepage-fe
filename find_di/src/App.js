@@ -1,9 +1,15 @@
-import logo from './logo.svg';
+// import SignupForm from './SignupForm';
+import Login from './components/Login';
+// import logo from './logo.svg';
+import PostForm from "./components/PostForm";
+import PostList from "./components/PostList";
+import PostItem from "./components/PostItem";
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
 function App() {
   return (
     <div className="App">
+
 
       <header class="main-banner">
         <div class="logo">
@@ -31,6 +37,7 @@ function App() {
     <script src="_d.js"></script>
     <JangbalCity />
     </div>
+    
   );
 }
 
