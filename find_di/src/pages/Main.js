@@ -1,9 +1,10 @@
 import React from 'react';
+import Calendar from '../Calendar';
 
 const Main = () => {
     return (
         <div>
-            <h1>메인 페이지</h1>
+            <Calendar />
         </div>
     );
 };
