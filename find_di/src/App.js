@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-
+import JangbalCity from './pages/JangbalCity';
 function App() {
   return (
     <div className="App">
@@ -29,6 +29,7 @@ function App() {
     </header>
 
     <script src="_d.js"></script>
+    <JangbalCity />
     </div>
   );
 }
