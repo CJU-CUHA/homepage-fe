@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './components/Login';
 import SignupForm from './SignupForm';
-import Footer from './components/Footer';
 import Dev from './pages/Dev';
 import Load from './Load';
 import './App.css';
@@ -20,7 +19,6 @@ function App() {
         <Route path="/SignupForm" element={<SignupForm />} />
         <Route path="/Load" element={<Load/>} />
       </Routes>
-      <Footer />
     </Router>
   );
 }
