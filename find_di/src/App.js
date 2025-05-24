@@ -11,7 +11,9 @@ import './App.css';
 import JangbalCity from './pages/JangbalCity';
 function App() {
   return (
+    
     <Router>
+      <JangbalCity></JangbalCity>
       <Header />
       <Routes>
         <Route path="/Main" element={<Main/>} />
@@ -22,6 +24,9 @@ function App() {
       </Routes>
       <Footer />
     </Router>
+    
+    
+    
   );
 }
 
