@@ -1,9 +1,10 @@
 import React from 'react';
+import JangbalCity from './JangbalCity';
 
 const Dev = () => {
     return (
         <div>
-            <h1>개발자 페이지!!!</h1>
+            <JangbalCity />
         </div>
     );
 };
