@@ -4,13 +4,16 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './components/Login';
 import SignupForm from './SignupForm';
+import Footer from './components/Footer';
 import Dev from './pages/Dev';
 import Load from './Load';
 import './App.css';
-
+import JangbalCity from './pages/JangbalCity';
 function App() {
   return (
+    
     <Router>
+      <JangbalCity></JangbalCity>
       <Header />
       <Routes>
         <Route path="/Main" element={<Main/>} />
@@ -19,8 +22,9 @@ function App() {
         <Route path="/SignupForm" element={<SignupForm />} />
         <Route path="/Load" element={<Load/>} />
       </Routes>
+      <Footer />
     </Router>
-  );
+    );
 }
 
 export default App;
