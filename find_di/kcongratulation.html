@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>수장님의 보석함</title>
+    <link rel="stylesheet" href="kcongratulation.css">
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+        }
+    
+        .image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .image:hover {
+            transform: scale(1.03);
+        }
+    
+        .box {
+            text-align: center;
+            padding: 20px;
+        }
+    
+        .box h1 {
+            font-size: 28px;
+            font-family: 'Pretendard', sans-serif;
+            color: #333;
+            margin-top: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+        }
+    
+        .box p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+    
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 5px;
+        }
+    
+        .arrow-button, .page-button {
+            border: none;
+            ba;
+            padding: 6px 12pckground: #eee;
+            border-radius: 6pxx;
+            font-size: 14px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+    
+        .page-button:hover,
+        .arrow-button:hover {
+            background: #ccc;
+        }
+    
+        .page-button:active {
+            background: #999;
+            color: white;
+        }
+        .fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+    </style>
+    
+</head>
+<body>
+    <div class="content" id="content">
+        // 여기에 페이지별 내용이 동적으로 들어감
+    </div>
+
+    <div class="pagination">
+    <button class="arrow-button" id="first">≪</button>
+    <button class="arrow-button" id="prev">◀</button>
+    <div id="page-buttons"></div>
+    <button class="arrow-button" id="next">▶</button>
+    <button class="arrow-button" id="last">≫</button>
+</div>
+
+
+    <script>
+        const totalPages = 100;
+        const buttonsPerPage = 10;
+        let currentButtonGroup = 0;
+        let currentPage = 1;
+
+        const contentEl = document.getElementById('content');
+        const pageButtonsContainer = document.getElementById('page-buttons');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const firstButton = document.getElementById('first');
+        const lastButton = document.getElementById('last');
+
+        //  페이지별 콘텐츠 데이터
+        const contentData = {
+            1: {
+                img: 'sujang.png',
+                title: '수장님의 보석함',
+                text: '청주대 디지털보안학과에 존재하는 CUHA 회장 서종찬 수장님의 개인 게시판이다.'
+            },
+            2: {
+                img: 'page2.png',
+                title: '수장님의 추억들',
+                text: '여기는 수장님의 소중한 추억들을 담은 공간입니다.'
+            },
+            3: {
+                img: 'page3.png',
+                title: '수장님의 명언집',
+                text: '수장님의 인생 명언들을 기록해두는 공간입니다.'
+            }
+            // ... 4~100번도 이와 같은 형식으로 추가 가능
+        };
+
+        function renderContent(page) {
+            const data = contentData[page] || {
+                img: 'default.png',
+                title: `페이지 ${page}`,
+                text: '아직 이 페이지에 대한 내용은 준비되지 않았습니다.'
+            };
+        contentEl.innerHTML = `
+            <div class="box fade-in">
+            <img src="${data.img}" alt="페이지 ${page} 이미지" class="image">
+            <h1>${data.title}</h1>
+            <p>${data.text}</p>
+            </div>
+    `;
+        }
+
+        function renderPageButtons() {
+            pageButtonsContainer.innerHTML = '';
+            const startPage = currentButtonGroup * buttonsPerPage + 1;
+            const endPage = Math.min(startPage + buttonsPerPage - 1, totalPages);
+
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.className = 'page-button';
+                button.textContent = i;
+                if (i === currentPage) {
+                    button.style.backgroundColor = '#ddd'; // 현재 페이지 표시
+                }
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    renderContent(i);
+                    renderPageButtons();
+                });
+                firstButton.addEventListener('click', () => {
+        currentPage = 1;
+        currentButtonGroup = 0;
+        renderContent(currentPage);
+        renderPageButtons();
+    });
+
+        lastButton.addEventListener('click', () => {
+        currentPage = totalPages;
+        currentButtonGroup = Math.floor((totalPages - 1) / buttonsPerPage);
+        renderContent(currentPage);
+        renderPageButtons();
+    });
+
+                pageButtonsContainer.appendChild(button);
+            }
+
+            prevButton.disabled = currentButtonGroup === 0;
+            nextButton.disabled = (currentButtonGroup + 1) * buttonsPerPage >= totalPages;
+        }
+        document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' && currentPage < totalPages) {
+    currentPage++;
+
+    //  현재 페이지에 맞게 버튼 그룹도 업데이트
+    currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
+
+    renderContent(currentPage);
+    renderPageButtons();
+  }
+
+  if (e.key === 'ArrowLeft' && currentPage > 1) {
+    currentPage--;
+
+    //  현재 페이지에 맞게 버튼 그룹도 업데이트
+    currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
+
+    renderContent(currentPage);
+    renderPageButtons();
+  }
+});
+
+
+        // 최초 초기화
+        renderContent(currentPage);
+        renderPageButtons();
+    </script>
+</body>
+</html>
