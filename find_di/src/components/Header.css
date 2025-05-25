@@ -1,3 +1,23 @@
+.auth {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 20px;
+  font-size: 0.8rem;
+  color: #333;
+  z-index: 1000;
+}
+
+.auth a {
+  text-decoration: none;
+  color: #333;
+  margin: 0 4px;
+}
+
+.auth .sep {
+  margin: 0 2px;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;

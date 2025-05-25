@@ -35,9 +35,9 @@ function Header() {
             <div class="divider"></div>
             <span class="click-me" onClick={handleClick}>Click Me</span>
           </nav>
-          <div class="auth">
+          <div className="auth">
             <a href="/login">로그인</a>
-            <span class="sep">|</span>
+            <span className="sep">|</span>
             <a href="/signupform">회원가입</a>
           </div>
         </header>
