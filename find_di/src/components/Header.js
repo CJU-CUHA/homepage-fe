@@ -1,7 +1,18 @@
 import React from "react";
+import { useState } from "react";
 import cuhaLogo from '../img/cu.png';
 
 function Header() {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleClick = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <div className="App">
@@ -22,7 +33,7 @@ function Header() {
                 <span>MINECRAFT</span>
             </a>
             <div class="divider"></div>
-            <span class="click-me">Click Me</span>
+            <span class="click-me" onClick={handleClick}>Click Me</span>
           </nav>
           <div class="auth">
             <a href="/login">로그인</a>
@@ -31,6 +42,16 @@ function Header() {
           </div>
         </header>
       </div>
+
+       {modalOpen && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2>당신의 1초를 빼앗기</h2>
+            <p>메롱</p>
+            <button onClick={handleClose}>닫기</button>
+          </div>
+        </div>
+       )}
     </>
   );
 }
