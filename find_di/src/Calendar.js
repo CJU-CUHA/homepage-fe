@@ -124,6 +124,17 @@ const Calendar = () => {
 
   return (
     <div style={{ position: 'relative' }}>
+      <>
+        <div
+          className="calendar-wrapper"
+          style={{
+            position: 'fixed',
+            top: '100px',
+            right: '30px',
+            zIndex: 1000
+          }}
+          ></div>
+      </>
       <div
         className="calendar-container"
         style={{
