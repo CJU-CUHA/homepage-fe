@@ -9,8 +9,8 @@ import Load from './Load';
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
 function App() {
-  return (
 
+  return (
     <Router>
       <Header />
       <Routes>
@@ -20,9 +20,10 @@ function App() {
         <Route path="/Login" element={<Login/>} />
         <Route path="/SignupForm" element={<SignupForm />} />
       </Routes>
+
       <Footer />
     </Router>
-    );
-}
+   );
+ }
 
 export default App;

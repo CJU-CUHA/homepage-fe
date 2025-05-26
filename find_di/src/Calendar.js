@@ -10,14 +10,27 @@ const formatDate = (year, month, day) => {
   return `${year}-${mm}-${dd}`;
 };
 
-const Calendar = () => {
+const Calendar = ({ currentUser }) => {
   const today = new Date();
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [scheduleData, setScheduleData] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [noticeText, setNoticeText] = useState('');
+  const [title, setTitle] = useState('');
+  const [titleList, setTitleList] = useState([]);
+  const [subtitle, setSubtitle] = useState('');
+  const [author, setAuthor] = useState('');
+
+  useEffect(() => {
+    fetch('/api/titles')
+      .then(res => res.json())
+      .then(data => setTitleList(data))
+      .catch(err => {
+        console.error('제목 목록 불러오기 실패:', err);
+        setTitleList(['Security', 'Programming', 'Meetimg', 'Work']);
+      });
+  }, []);
 
   useEffect(() => {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -28,21 +41,43 @@ const Calendar = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(scheduleData));
   }, [scheduleData]);
 
-  const handleDayClick = (dateStr) => {
-    setSelectedDate(dateStr);
-    setNoticeText(scheduleData[dateStr] || '');
-    setModalOpen(true);
-  };
+  useEffect(() => {
+    if (selectedDate && scheduleData[selectedDate]) {
+      const data = scheduleData[selectedDate];
+      setTitle(data.title || '');
+      setSubtitle(data.subtitle || '');
+      setAuthor(data.author || '');
+    } else {
+      setTitle('');
+      setSubtitle('');
+      setAuthor(currentUser?.name || '');
+    }
+  }, [selectedDate, scheduleData, currentUser]);
 
   const handleSave = () => {
-    if (noticeText.trim()) {
-      setScheduleData((prev) => ({
+    if (selectedDate) {
+      setScheduleData(prev => ({
         ...prev,
-        [selectedDate]: noticeText.trim(),
+        [selectedDate]: {
+          title: title.trim(),
+          subtitle: subtitle.trim(),
+          author: currentUser?.name || '',
+        },
       }));
       setModalOpen(false);
-      setNoticeText('');
+      setTitle('');
+      setSubtitle('');
+      setAuthor('');
     }
+  };
+
+  const handleDayClick = (dateStr) => {
+    setSelectedDate(dateStr);
+    const data = scheduleData[dateStr] || {};
+    setTitle(data.title || '');
+    setSubtitle(data.subtitle || '');
+    setAuthor(data.author || currentUser?.name || '');
+    setModalOpen(true);
   };
 
   const handleDelete = () => {
@@ -51,13 +86,17 @@ const Calendar = () => {
       const { [selectedDate]: _, ...rest } = scheduleData;
       setScheduleData(rest);
       setModalOpen(false);
-      setNoticeText('');
+      setTitle('');
+      setSubtitle('');
+      setAuthor('');
     }
   };
 
   const closeModal = () => {
     setModalOpen(false);
-    setNoticeText('');
+    setTitle('');
+    setSubtitle('');
+    setAuthor('');
   };
 
   const handlePrevMonth = () => {
@@ -124,19 +163,7 @@ const Calendar = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <>
-        <div
-          className="calendar-wrapper"
-          style={{
-            position: 'fixed',
-            top: '100px',
-            right: '30px',
-            zIndex: 1000
-          }}
-          ></div>
-      </>
-      <div
-        className="calendar-container"
+      <div className="calendar-container"
         style={{
           backgroundColor: 'white',
           padding: 20,
@@ -146,8 +173,7 @@ const Calendar = () => {
         }}
       >
         <div className="calendar-box">
-          <div
-            className="calendar-header"
+          <div className="calendar-header"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -158,9 +184,7 @@ const Calendar = () => {
             }}
           >
             <FaChevronLeft onClick={handlePrevMonth} style={{ cursor: 'pointer' }} title="이전 달" />
-            <span>
-              {currentYear}년 {currentMonth + 1}월
-            </span>
+            <span>{currentYear}년 {currentMonth + 1}월</span>
             <FaChevronRight onClick={handleNextMonth} style={{ cursor: 'pointer' }} title="다음 달" />
           </div>
 
@@ -182,28 +206,35 @@ const Calendar = () => {
       </div>
 
       {modalOpen && (
-        <div
-          className="modal"
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#fff',
-            padding: '20px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-            zIndex: 1000,
-            minWidth: '300px',
-          }}
-        >
+        <div className="modal">
           <h3>{selectedDate} 일정</h3>
-          <textarea
-            value={noticeText}
-            onChange={(e) => setNoticeText(e.target.value)}
-            rows={4}
+
+          <select
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            style={{ width: '100%', marginBottom: '8px' }}
+          >
+            <option value="">제목 선택</option>
+            {titleList.map((t, idx) => (
+              <option key={idx} value={t}>{t}</option>
+            ))}
+          </select>
+
+          <input
+            type="text"
+            placeholder="내용"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            style={{ width: '100%', marginBottom: '8px' }}
+          />
+          <input
+            type="text"
+            placeholder="등록자"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
             style={{ width: '100%', marginBottom: '10px' }}
           />
+
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <button onClick={handleSave}>저장</button>
             <button onClick={handleDelete}>삭제</button>

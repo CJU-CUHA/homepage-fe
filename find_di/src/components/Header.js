@@ -1,11 +1,19 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import cuhaLogo from '../img/cu.png';
 import './Header.css';
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  useEffect(() => {
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const handler = (e) => setIsDarkMode(e.matches);
+  mediaQuery.addEventListener('change', handler);
+  return () => mediaQuery.removeEventListener('change', handler);
+}, []);
 
   const handleClick = () => {
     setModalOpen(true);
