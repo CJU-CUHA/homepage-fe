@@ -21,6 +21,8 @@ const Calendar = ({ currentUser }) => {
   const [titleList, setTitleList] = useState([]);
   const [subtitle, setSubtitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [savedSchedule, setSavedSchedule] = useState(null);
+  const SAVED_SCHEDULE_KEY = 'savedSchedule';
 
   useEffect(() => {
     fetch('/api/titles')
@@ -28,7 +30,7 @@ const Calendar = ({ currentUser }) => {
       .then(data => setTitleList(data))
       .catch(err => {
         console.error('제목 목록 불러오기 실패:', err);
-        setTitleList(['Security', 'Programming', 'Meetimg', 'Work']);
+        setTitleList(['Security', 'Programming', 'Meeting', 'Work']);
       });
   }, []);
 
@@ -54,22 +56,40 @@ const Calendar = ({ currentUser }) => {
     }
   }, [selectedDate, scheduleData, currentUser]);
 
-  const handleSave = () => {
-    if (selectedDate) {
-      setScheduleData(prev => ({
-        ...prev,
-        [selectedDate]: {
-          title: title.trim(),
-          subtitle: subtitle.trim(),
-          author: currentUser?.name || '',
-        },
-      }));
-      setModalOpen(false);
-      setTitle('');
-      setSubtitle('');
-      setAuthor('');
+useEffect(() => {
+  const saved = localStorage.getItem(SAVED_SCHEDULE_KEY);
+  if (saved) {
+    try {
+      setSavedSchedule(JSON.parse(saved));
+    } catch (e) {
+      console.error('savedSchedule 파싱 오류:', e);
     }
-  };
+  }
+}, []);
+
+const handleSave = () => {
+  if (selectedDate) {
+    const newSchedule = {
+      title: title.trim(),
+      subtitle: subtitle.trim(),
+      author: currentUser?.name || '',
+    };
+
+    setScheduleData(prev => ({
+      ...prev,
+      [selectedDate]: newSchedule,
+    }));
+
+    const saved = { date: selectedDate, subtitle: newSchedule.subtitle };
+    setSavedSchedule(saved);
+    localStorage.setItem(SAVED_SCHEDULE_KEY, JSON.stringify(saved));
+
+    setModalOpen(false);
+    setTitle('');
+    setSubtitle('');
+    setAuthor('');
+  }
+};
 
   const handleDayClick = (dateStr) => {
     setSelectedDate(dateStr);
@@ -81,16 +101,23 @@ const Calendar = ({ currentUser }) => {
   };
 
   const handleDelete = () => {
-    const confirmDelete = window.confirm('이 일정을 삭제하시겠습니까?');
-    if (confirmDelete) {
-      const { [selectedDate]: _, ...rest } = scheduleData;
-      setScheduleData(rest);
-      setModalOpen(false);
-      setTitle('');
-      setSubtitle('');
-      setAuthor('');
+  const confirmDelete = window.confirm('이 일정을 삭제하시겠습니까?');
+  if (confirmDelete) {
+    const { [selectedDate]: _, ...rest } = scheduleData;
+    setScheduleData(rest);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
+
+    if (savedSchedule?.date === selectedDate) {
+      setSavedSchedule(null);
+      localStorage.removeItem(SAVED_SCHEDULE_KEY);
     }
-  };
+
+    setModalOpen(false);
+    setTitle('');
+    setSubtitle('');
+    setAuthor('');
+  }
+};
 
   const closeModal = () => {
     setModalOpen(false);
@@ -166,7 +193,7 @@ const Calendar = ({ currentUser }) => {
       <div className="calendar-container"
         style={{
           backgroundColor: 'white',
-          padding: 20,
+          padding: 'fixed',
           borderRadius: '12px',
           boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
           width: 'fit-content',
@@ -204,6 +231,22 @@ const Calendar = ({ currentUser }) => {
           </table>
         </div>
       </div>
+
+      {savedSchedule && savedSchedule.subtitle && (
+        <div
+          style={{
+            marginTop: '20px',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '8px',
+            backgroundColor: '#f0f0f0',
+            width: 'fit-content',
+          }}
+        >
+         <strong>{savedSchedule.date}</strong>
+         <p>{savedSchedule.subtitle}</p>
+       </div>
+     )}
 
       {modalOpen && (
         <div className="modal">
