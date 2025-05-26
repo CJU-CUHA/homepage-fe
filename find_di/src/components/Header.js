@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import cuhaLogo from '../img/cu.png';
+import './Header.css';
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -33,7 +34,7 @@ function Header() {
                 <span>MINECRAFT</span>
             </a>
             <div class="divider"></div>
-            <span class="click-me" onClick={handleClick}>Click Me</span>
+            <span className="click-me" onClick={handleClick}>Click Me</span>
           </nav>
           <div className="auth">
             <a href="/login">로그인</a>

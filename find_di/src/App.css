@@ -48,7 +48,7 @@ body {
 }
 
 .main-banner {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -142,4 +142,3 @@ body {
   color: #999;
   margin: 0 5px;
 }
-
