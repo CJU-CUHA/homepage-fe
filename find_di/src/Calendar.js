@@ -184,92 +184,94 @@ const handleBulkDelete = () => {
   };
 
   return (
-    <div>
-      <div className="calendar-container">
-        <div className="calendar-header">
-          <FaChevronLeft onClick={() => {
-            if (currentMonth === 0) {
-              setCurrentMonth(11);
-              setCurrentYear(currentYear - 1);
-            } else setCurrentMonth(currentMonth - 1);
-          }} />
-          <span>{currentYear}년 {currentMonth + 1}월</span>
-          <FaChevronRight onClick={() => {
-            if (currentMonth === 11) {
-              setCurrentMonth(0);
-              setCurrentYear(currentYear + 1);
-            } else setCurrentMonth(currentMonth + 1);
-          }} />
-        </div>
-
-        <table className="calendar">
-          <thead>
-            <tr>
-              <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-            </tr>
-          </thead>
-          <tbody>{createCalendar()}</tbody>
-        </table>
+  <div>
+    <div className="calendar-container">
+      <div className="calendar-header">
+        <FaChevronLeft onClick={() => {
+          if (currentMonth === 0) {
+            setCurrentMonth(11);
+            setCurrentYear(currentYear - 1);
+          } else setCurrentMonth(currentMonth - 1);
+        }} />
+        <span>{currentYear}년 {currentMonth + 1}월</span>
+        <FaChevronRight onClick={() => {
+          if (currentMonth === 11) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+          } else setCurrentMonth(currentMonth + 1);
+        }} />
       </div>
 
-      <div className="schedule-list-container">
-  {Object.entries(scheduleData).map(([date, entries]) => (
-    <div key={date} className="schedule-list">
-      <strong>{date}</strong>
-      {entries.map((entry) => (
-        <div key={entry.id} className="schedule-item">
-          <input
-            type="checkbox"
-            checked={selectedForDelete.has(entry.id)}
-            onChange={() => toggleSelectForDelete(entry.id)}
-          />
-          <span>{entry.title} - {entry.subtitle} ({entry.author})</span>
-        </div>
-      ))}
+      <table className="calendar">
+        <thead>
+          <tr>
+            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+          </tr>
+        </thead>
+        <tbody>{createCalendar()}</tbody>
+      </table>
     </div>
-  ))}
+
+    <div className="schedule-list-container">
+  {Object.entries(scheduleData)
+    .sort(([a], [b]) => new Date(a) - new Date(b))  // ✅ 날짜 기준 정렬 추가
+    .map(([date, entries]) => (
+      <div key={date} className="schedule-list">
+        <strong>{date}</strong>
+        {entries.map((entry) => (
+          <div key={entry.id} className="schedule-item">
+            <input
+              type="checkbox"
+              checked={selectedForDelete.has(entry.id)}
+              onChange={() => toggleSelectForDelete(entry.id)}
+            />
+            <span>{entry.title} - {entry.subtitle} ({entry.author})</span>
+          </div>
+        ))}
+      </div>
+    ))}
   {selectedForDelete.size > 0 && (
     <button onClick={handleBulkDelete}>선택된 일정 삭제</button>
   )}
 </div>
 
-      {modalOpen && (
-        <div className="modal">
-          <h3>{selectedDate}</h3>
-          <select value={title} onChange={(e) => setTitle(e.target.value)}>
-            <option value="">제목 선택</option>
-            {titleList.map((t, i) => (
-              <option key={i} value={t}>{t}</option>
-            ))}
-          </select>
+    {modalOpen && (
+      <div className="modal">
+        <h3>{selectedDate}</h3>
+        <select value={title} onChange={(e) => setTitle(e.target.value)}>
+          <option value="">제목 선택</option>
+          {titleList.map((t, i) => (
+            <option key={i} value={t}>{t}</option>
+          ))}
+        </select>
 
-          <input
-            type="text"
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-            placeholder="내용"
-          />
+        <input
+          type="text"
+          value={subtitle}
+          onChange={(e) => setSubtitle(e.target.value)}
+          placeholder="내용"
+        />
 
-          <p>등록자: {author}</p>
+        <p>등록자: {author}</p>
 
-          <div className="modal-actions">
-            <button onClick={handleSave}>저장</button>
-            <button onClick={() => setModalOpen(false)}>닫기</button>
-          </div>
+        <div className="modal-actions">
+          <button onClick={handleSave}>저장</button>
+          <button onClick={() => setModalOpen(false)}>닫기</button>
         </div>
-      )}
+      </div>
+    )}
 
-      {deleteConfirmOpen && (
-        <div className="modal">
-          <p>이 일정을 삭제하시겠습니까?</p>
-          <div className="modal-actions">
-            <button onClick={confirmDelete}>확인</button>
-            <button onClick={cancelDelete}>취소</button>
-          </div>
+    {deleteConfirmOpen && (
+      <div className="modal">
+        <p>이 일정을 삭제하시겠습니까?</p>
+        <div className="modal-actions">
+          <button onClick={confirmDelete}>확인</button>
+          <button onClick={cancelDelete}>취소</button>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+  </div>
   );
-};
+}
 
 export default Calendar;
