@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>수장님의 보석함</title>
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 40px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    position: relative;
+
+    overflow-x: hidden;
+    overflow-y: visible;
+
+    min-height: 500px; 
+  }
+
+  .box {
+    position: absolute;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    margin-bottom: 15px;
+
+    
+  }
+
+  .pagination {
+    
+    text-align: center;
+    max-width: 600px;
+  }
+  .page-button,
+  .arrow-button {
+    margin: 0 5px;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: none;
+    background: #eee;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .page-button:hover,
+  .arrow-button:hover {
+    background: #ccc;
+  }
+  .page-button:active,
+  .arrow-button:active {
+    background: #999;
+    color: #fff;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .fade-in-left {
+    animation: slideInLeft 0.4s ease-out;
+  }
+  .fade-in-right {
+    animation: slideInRight 0.4s ease-out;
+  }
+</style>
+</head>
+<body>
+  
+  <div class="content" id="content"></div>
+
+ 
+  <div class="pagination">
+    <button class="arrow-button" id="first">≪</button>
+    <button class="arrow-button" id="prev">◀</button>
+    <div id="page-buttons" style="display:inline-block;"></div>
+    <button class="arrow-button" id="next">▶</button>
+    <button class="arrow-button" id="last">≫</button>
+  </div>
+
+  <script>
+    
+    const totalPages = 100;
+    const buttonsPerPage = 10;
+    let currentButtonGroup = 0;
+    let currentPage = 1;
+
+    const contentEl = document.getElementById('content');
+    const pageButtonsContainer = document.getElementById('page-buttons');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const firstButton = document.getElementById('first');
+    const lastButton = document.getElementById('last');
+
+    
+    const contentData = {
+      1: {
+        img: 'sujang.png',
+        title: '수장님의 보석함',
+        text: '청주대 디지털보안학과에 존재하는 CUHA 회장 서종찬 수장님의 개인 게시판이다.'
+      },
+      2: {
+        img: 'page2.png',
+        title: '수장님의 추억들',
+        text: '여기는 수장님의 소중한 추억들을 담은 공간입니다.'
+      },
+      3: {
+        img: 'page3.png',
+        title: '수장님의 명언집',
+        text: '수장님의 인생 명언들을 기록해두는 공간입니다.'
+      }
+     
+    };
+
+   
+    function renderContent(page, direction = 'left') {
+      
+      const data = contentData[page] || {
+        img: 'default.png',
+        title: `페이지 ${page}`,
+        text: '아직 이 페이지에 대한 내용은 준비되지 않았습니다.'
+      };
+
+      
+      const animClass = direction === 'left' ? 'fade-in-left' : 'fade-in-right';
+
+   
+      const slide = document.createElement('div');
+      slide.className = `box ${animClass}`;
+      slide.innerHTML = `
+        <img src="${data.img}" alt="페이지 ${page} 이미지" class="image" />
+        <h1>${data.title}</h1>
+        <p>${data.text}</p>
+      `;
+
+      
+      contentEl.innerHTML = '';
+      contentEl.appendChild(slide);
+    }
+
+    
+    function renderPageButtons() {
+      pageButtonsContainer.innerHTML = '';
+      const startPage = currentButtonGroup * buttonsPerPage + 1;
+      const endPage = Math.min(startPage + buttonsPerPage - 1, totalPages);
+
+      for (let i = startPage; i <= endPage; i++) {
+        const button = document.createElement('button');
+        button.className = 'page-button';
+        button.textContent = i;
+        if (i === currentPage) {
+          button.style.backgroundColor = '#ddd';
+        }
+        button.addEventListener('click', () => {
+         
+          const direction = i > currentPage ? 'right' : 'left';
+          currentPage = i;
+          renderContent(currentPage, direction);
+          renderPageButtons();
+        });
+        pageButtonsContainer.appendChild(button);
+      }
+
+      
+      prevButton.disabled = currentButtonGroup === 0;
+      nextButton.disabled = (currentButtonGroup + 1) * buttonsPerPage >= totalPages;
+    }
+
+    
+    firstButton.addEventListener('click', () => {
+      currentPage = 1;
+      currentButtonGroup = 0;
+      renderContent(currentPage, 'left');
+      renderPageButtons();
+    });
+
+    lastButton.addEventListener('click', () => {
+      currentPage = totalPages;
+      currentButtonGroup = Math.floor((totalPages - 1) / buttonsPerPage);
+      renderContent(currentPage, 'right');
+      renderPageButtons();
+    });
+
+    prevButton.addEventListener('click', () => {
+      if (currentButtonGroup > 0) {
+        currentButtonGroup--;
+        currentPage = currentButtonGroup * buttonsPerPage + 1;
+        renderContent(currentPage, 'left');
+        renderPageButtons();
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      if ((currentButtonGroup + 1) * buttonsPerPage < totalPages) {
+        currentButtonGroup++;
+        currentPage = currentButtonGroup * buttonsPerPage + 1;
+        renderContent(currentPage, 'right');
+        renderPageButtons();
+      }
+    });
+
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentPage < totalPages) {
+        currentPage++;
+        currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
+        renderContent(currentPage, 'right');
+        renderPageButtons();
+      }
+      if (e.key === 'ArrowLeft' && currentPage > 1) {
+        currentPage--;
+        currentButtonGroup = Math.floor((currentPage - 1) / buttonsPerPage);
+        renderContent(currentPage, 'left');
+        renderPageButtons();
+      }
+    });
+
+    
+    renderContent(currentPage);
+    renderPageButtons();
+  </script>
+</body>
+</html>
