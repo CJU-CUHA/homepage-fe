@@ -30,7 +30,7 @@ function Header() {
           <button className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
 
           <div className="logo">
-            <Link to="/main">
+            <Link to="/">
               <img src={cuhaLogo} alt="logo" />
             </Link>
           </div>
