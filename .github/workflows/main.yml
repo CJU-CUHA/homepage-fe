@@ -27,6 +27,7 @@ jobs:
       # 3. 의존성 설치 및 빌드
       - name: Install dependencies and build
         run: |
+          cd find_di
           npm ci
           npm run build
         shell: bash
