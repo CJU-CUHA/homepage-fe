@@ -42,6 +42,11 @@
   font-size: 16px;
 }
 
+.calendar-container {
+  width: 320px;
+  font-size: 14px;
+}
+
 .calendar th,
 .calendar td {
   border: 1px solid #ccc;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './share.css';
+import './pages/share.css';
 
 function PostBoard() {
   const [posts, setPosts] = useState([]);
