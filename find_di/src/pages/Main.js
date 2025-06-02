@@ -10,7 +10,7 @@ const Main = ({ currentUser }) => {
         <Calendar currentUser={currentUser} />
       </div>
       <div className="top-right">
-        {/* <Postboard/> */}
+        <Postboard/>
       </div>
       <div className="bottom-left"></div>
       <div className="bottom-right"></div>
