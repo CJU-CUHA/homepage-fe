@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import './Login.css'; // 기존에 만든 스타일 연결
-import { Link } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');

@@ -6,6 +6,7 @@ import './Header.css';
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
+
   const handleClick = () => {
     setModalOpen(true);
   };

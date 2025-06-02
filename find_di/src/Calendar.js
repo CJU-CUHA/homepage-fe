@@ -184,7 +184,7 @@ const handleBulkDelete = () => {
   };
 
   return (
-  <div>
+  <div className="fixed-calendar"> 
     <div className="calendar-container">
       <div className="calendar-header">
         <FaChevronLeft onClick={() => {
@@ -214,7 +214,7 @@ const handleBulkDelete = () => {
 
     <div className="schedule-list-container">
   {Object.entries(scheduleData)
-    .sort(([a], [b]) => new Date(a) - new Date(b))  // ✅ 날짜 기준 정렬 추가
+    .sort(([a], [b]) => new Date(a) - new Date(b))  
     .map(([date, entries]) => (
       <div key={date} className="schedule-list">
         <strong>{date}</strong>
