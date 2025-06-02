@@ -14,8 +14,8 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<JangbalCity/>} />
-        <Route path="/Main" element={<Main />} />
+        <Route path="/" element={<Main/>} />
+        <Route path="/JangbalCity" element={<JangbalCity />} />
         <Route path="/Load" element={<Load/>} />
         <Route path="/Login" element={<Login/>} />
         <Route path="/SignupForm" element={<SignupForm />} />

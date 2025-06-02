@@ -2,10 +2,18 @@ import React from "react";
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 import cuhaLogo from '../img/cu.png';
+import Sidebar from "./Sidebar";
 import './Header.css';
 
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const closeSidebar = () => setSidebarOpen(false);
 
   const handleClick = () => {
     setModalOpen(true);
@@ -18,32 +26,25 @@ function Header() {
   return (
     <>
       <div className="App">
-        <header class="main-banner">
-          <div class="logo">
+        <header className="main-banner">
+          <button className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
+
+          <div className="logo">
             <Link to="/main">
-            <img src={cuhaLogo} alt="logo" style={{ userSelect: "none", WebkitUserDrag: "none" }} />
+              <img src={cuhaLogo} alt="logo" />
             </Link>
           </div>
+
           <nav className="nav-menu">
-            <span>CTF Time</span>
-            <div className="divider"></div>
-            <span>WAR GAME</span>
-            <div className="divider"></div>
-            <Link to="https://cuha.cju.ac.kr/index.php/%EB%8C%80%EB%AC%B8">
-                <span>CUHA WIKI</span>
-            </Link>
-            <div className="divider"></div>
-            <Link to="https://cifrar.cju.ac.kr">
-                <span>MINECRAFT</span>
-            </Link>
-            <div className="divider"></div>
-            <span className="click-me" onClick={handleClick}>Click Me</span>
+            <span className="click-me" onClick={() => setModalOpen(true)}>Click Me</span>
           </nav>
+
           <div className="auth">
             <Link to="/login">로그인</Link>
             <span className="sep">|</span>
             <Link to="/signupform">회원가입</Link>
           </div>
+          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         </header>
       </div>
 
