@@ -48,7 +48,7 @@ jobs:
       - name: Deploy to Remote Server
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -p ${{ secrets.SERVER_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /home/***/deploy/homepage-fe
+            cd /home/***/deploy/homepage-fe/find_di
             git pull origin main
 
             # 기존 컨테이너 종료 및 제거
