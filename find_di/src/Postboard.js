@@ -81,7 +81,7 @@ function PostBoard() {
           type="file"
           ref={fileInputRef}
           onChange={(e) => setFile(e.target.files[0])}
-          accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt"
+          accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.hwp"
           />
           {file && (
             <div style={{ marginLeft: '10px' }}>
