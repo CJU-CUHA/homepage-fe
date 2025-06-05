@@ -8,8 +8,27 @@ import './Header.css';
 function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [fortuneMessage, setFortuneMessage] = useState('');
+  const [hasShownFortune, setHasShownFortune] = useState(false);
 
-  const handleClose = () => {
+  const fortunes = [
+    "오늘은 작은 기쁨이 찾아올 거예요.",
+    "기회는 준비된 자에게 옵니다.",
+    "행운은 곧 당신의 편이 될 거예요!",
+    "가장 평범한 하루가 특별해질 수 있어요.",
+    "지금의 노력이 곧 결실을 맺습니다."
+  ];
+
+  const handleClickMe = () => {
+    if (!hasShownFortune) {
+      const random = fortunes[Math.floor(Math.random() * fortunes.length)];
+      setFortuneMessage(random);
+      setModalOpen(true);
+      setHasShownFortune(true);
+    }
+  };
+
+  const handleCloseFortune = () => {
     setModalOpen(false);
   };
 
@@ -27,7 +46,7 @@ function Header() {
           </div>
 
           <nav className="nav-menu">
-            <span className="click-me" onClick={() => setModalOpen(true)}>Click Me</span>
+            <span className="click-me" onClick={handleClickMe}>Click Me</span>
           </nav>
 
           <div className="auth">
@@ -42,9 +61,9 @@ function Header() {
        {modalOpen && (
         <div className="modal-backdrop">
           <div className="modal">
-            <h2>당신의 1초를 빼앗기</h2>
-            <p>메롱</p>
-            <button onClick={handleClose}>닫기</button>
+            <h2>오늘의 운세</h2>
+            <p>{fortuneMessage}</p>
+            <button onClick={handleCloseFortune}>닫기</button>
           </div>
         </div>
        )}
