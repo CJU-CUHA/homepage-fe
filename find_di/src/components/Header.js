@@ -9,16 +9,6 @@ function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
-
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const closeSidebar = () => setSidebarOpen(false);
-
-  const handleClick = () => {
-    setModalOpen(true);
-  };
-
   const handleClose = () => {
     setModalOpen(false);
   };
@@ -27,7 +17,8 @@ function Header() {
     <>
       <div className="App">
         <header className="main-banner">
-          <button className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
+          <button 
+            className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
 
           <div className="logo">
             <Link to="/">
