@@ -35,27 +35,30 @@ function Header() {
     <>
       <div className="App">
         <header className="main-banner">
-          <button 
-            className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
+        <div className="logo">
+          <Link to="/">
+            <img src={cuhaLogo} alt="logo" />
+          </Link>
+        </div>
 
-          <div className="logo">
-            <Link to="/">
-              <img src={cuhaLogo} alt="logo" />
-            </Link>
-          </div>
+        <div className="header-title">CUHA</div>
 
-          <nav className="nav-menu">
-            <span className="click-me" onClick={handleClickMe}>Click Me</span>
-          </nav>
+  <div className="auth">
+    <Link to="/login">로그인</Link>
+    <span className="sep">|</span>
+    <Link to="/signupform">회원가입</Link>
+  </div>
 
-          <div className="auth">
-            <Link to="/login">로그인</Link>
-            <span className="sep">|</span>
-            <Link to="/signupform">회원가입</Link>
-          </div>
-          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        </header>
-      </div>
+  <div className="right-section">
+    <nav className="nav-menu">
+      <span className="click-me" onClick={handleClickMe}>Click Me</span>
+    </nav>
+    <button className="hamburger" onClick={() => setSidebarOpen(true)}>☰</button>
+  </div>
+
+  <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+ </header>
+</div>
 
        {modalOpen && (
         <div className="modal-backdrop">
