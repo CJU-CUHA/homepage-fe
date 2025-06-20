@@ -46,6 +46,7 @@ function Header() {
 
           <nav className="nav-menu">
             <span className="click-me" onClick={handleClickMe}>Click Me</span>
+            <Link to="/ctftime" className="ctf-menu">CTF TIME</Link>
           </nav>
 
           <div className="auth">

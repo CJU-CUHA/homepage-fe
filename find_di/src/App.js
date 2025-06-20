@@ -10,6 +10,7 @@ import Load from './Load';
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
 import PasswordReset from './components/PasswordReset';
+import CTFTime from './pages/CTFTime'; //
 function App() {
 
   return (
@@ -23,6 +24,8 @@ function App() {
         <Route path="/FindIdForm" element={<FindIdForm/>} />
         <Route path="/reset-password" element={<PasswordReset/>} />
         <Route path="/SignupForm" element={<SignupForm />} />
+        <Route path="/ctftime" element={<CTFTime />} />
+
       </Routes>
 
       <Footer />
