@@ -48,6 +48,10 @@ function Header() {
     <span className="sep">|</span>
     <Link to="/signupform">회원가입</Link>
   </div>
+          <nav className="nav-menu">
+            <span className="click-me" onClick={handleClickMe}>Click Me</span>
+            <Link to="/ctftime" className="ctf-menu">CTF TIME</Link>
+          </nav>
 
   <div className="right-section">
     <nav className="nav-menu">

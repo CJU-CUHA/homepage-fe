@@ -11,6 +11,7 @@ import Postboard from './Postboard';
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
 import PasswordReset from './components/PasswordReset';
+import CTFTime from './pages/CTFTime'; 
 function App() {
 
   return (
@@ -26,8 +27,8 @@ function App() {
         <Route path="/SignupForm" element={<SignupForm />} />
         <Route path="/resources" element={<Postboard />} />
         <Route path="/resources/files" element={<Postboard onlyWithFiles={true} />} />
+        <Route path="/ctftime" element={<CTFTime />} />
       </Routes>
-
       <Footer />
     </Router>
    );
