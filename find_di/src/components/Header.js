@@ -63,7 +63,7 @@ function Header() {
        {modalOpen && (
         <div className="modal-backdrop">
           <div className="modal">
-            <h2>오늘의 운세</h2>
+            <h2>오늘의 운세</h2> 
             <p>{fortuneMessage}</p>
             <button onClick={handleCloseFortune}>닫기</button>
           </div>

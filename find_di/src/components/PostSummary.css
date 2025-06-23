@@ -1,0 +1,19 @@
+.post-summary {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.summary-item {
+  margin-bottom: 10px;
+}
+
+.summary-item h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.summary-item p {
+  margin: 4px 0 0;
+  color: #555;
+}

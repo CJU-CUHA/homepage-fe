@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './pages/share.css';
 
-function PostBoard() {
+function PostBoard({ onlyWithFiles = false }) {
   const [posts, setPosts] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -9,6 +9,12 @@ function PostBoard() {
   const [file, setFile] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
   const fileInputRef = useRef(null);
+  const filteredPosts = posts.filter(post => {
+  const matchSearch =
+    post.title.includes(searchTerm) || post.content.includes(searchTerm);
+  const matchFile = !onlyWithFiles || (post.file && post.file.name);
+  return matchSearch && matchFile;
+});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,10 +47,6 @@ function PostBoard() {
     if (fileInputRef.current) fileInputRef.current.value = null;
   };
 
-  const filteredPosts = posts.filter(post =>
-    post.title.includes(searchTerm) || post.content.includes(searchTerm)
-  );
-
   const handlePostClick = (post) => {
     setSelectedPost(post);
   };
@@ -55,7 +57,7 @@ function PostBoard() {
 
   return (
     <div>
-      <h1>SHARE</h1>
+      <h1>share</h1>
       <input
         type="text"
         placeholder="검색어를 입력하세요"
