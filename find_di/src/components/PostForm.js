@@ -1,4 +1,3 @@
-// src/components/PostForm.js
 import React from "react";
 
 function PostForm({ title, content, setTitle, setContent, onSubmit }) {

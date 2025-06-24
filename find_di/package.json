@@ -8,6 +8,7 @@
   "author": "",
   "type": "type",
   "main": "index.js",
+  "proxy": "http://cuha.cju.ac.kr:10002",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
