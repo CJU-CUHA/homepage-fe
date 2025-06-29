@@ -1,4 +1,3 @@
-// src/pages/Dev.js
 import React from 'react';
 
 function Dev() {
