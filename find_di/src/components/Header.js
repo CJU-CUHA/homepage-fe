@@ -1,37 +1,60 @@
 import React from "react";
-import cuhaLogo from '../img/cu.png';
+import { Link } from "react-router-dom";
+import cuhaLogo from "../img/cu.png";
 
 function Header() {
   return (
-    <>
-      <div className="App">
-        <header class="main-banner">
-          <div className="logo">
-            <img src={cuhaLogo} alt="logo" />
-          </div>
-          <nav class="nav-menu">
-            <span>CTF Time</span>
-            <div class="divider"></div>
-            <span>WAR GAME</span>
-            <div class="divider"></div>
-            <a href="https://cuha.cju.ac.kr/index.php/%EB%8C%80%EB%AC%B8">
-                <span>CUHA WIKI</span>
-            </a>
-            <div class="divider"></div>
-            <a href="https://cifrar.cju.ac.kr">
-                <span>MINECRAFT</span>
-            </a>
-            <div class="divider"></div>
-            <span class="click-me">Click Me</span>
-          </nav>
-          <div class="auth">
-            <a href="/login">로그인</a>
-            <span class="sep">|</span>
-            <a href="/signupform">회원가입</a>
-          </div>
-        </header>
-      </div>
-    </>
+    <div className="App">
+      <header className="main-banner">
+        <div className="logo">
+          <img src={cuhaLogo} alt="logo" />
+        </div>
+
+        <nav className="nav-menu">
+         <Link to="/ctftime" className="nav-link">CTF Time</Link>
+          <div className="divider" />
+
+          <span>WAR GAME</span>
+          <div className="divider" />
+
+      
+          <a
+            href="https://cuha.cju.ac.kr/index.php/%EB%8C%80%EB%AC%B8"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>CUHA WIKI</span>
+          </a>
+          <div className="divider" />
+
+          <a
+            href="https://cifrar.cju.ac.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>MINECRAFT</span>
+          </a>
+          <div className="divider" />
+
+          <span className="click-me">Click Me</span>
+          <div className="divider" />
+
+          
+          <Link
+            to="/congratulation"
+            className="nav-link"
+          >
+            <span>Congratulation</span>
+          </Link>
+        </nav>
+
+        <div className="auth">
+          <Link to="/login">로그인</Link>
+          <span className="sep">|</span>
+          <Link to="/signupform">회원가입</Link>
+        </div>
+      </header>
+    </div>
   );
 }
 

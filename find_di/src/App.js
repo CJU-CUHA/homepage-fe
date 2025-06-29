@@ -9,18 +9,23 @@ import Dev from './pages/Dev';
 import Load from './Load';
 import './App.css';
 import JangbalCity from './pages/JangbalCity';
+import Congratulation from './Congratulation';  
+import CTFTime from "./pages/CTFTime";
 function App() {
   return (
     
     <Router>
-      <JangbalCity></JangbalCity>
+      
       <Header />
       <Routes>
+        <Route path="/" element={<JangbalCity />} />
         <Route path="/Main" element={<Main/>} />
         <Route path="/Dev" element={<Dev />} />
         <Route path="/Login" element={<Login/>} />
         <Route path="/SignupForm" element={<SignupForm />} />
         <Route path="/Load" element={<Load/>} />
+        <Route path="/congratulation" element={<Congratulation />} />
+        <Route path="/ctftime" element={<CTFTime />} /> 
       </Routes>
       <Footer />
     </Router>
