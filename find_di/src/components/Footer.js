@@ -6,8 +6,9 @@ function Footer() {
       padding: '1rem',
       backgroundColor: '#f8f8f8'
     }}>
-      <p>© 2025 Your Company. All rights reserved. CUHA is ...</p>
+      <p>© 2025 Your Company. All rights reserved.</p>
     </footer>
   );
 }
+
 export default Footer;

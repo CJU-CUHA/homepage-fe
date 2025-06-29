@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import './Login.css'; // 기존에 만든 스타일 연결
 
@@ -33,11 +34,11 @@ function Login() {
         <button type="submit">로그인</button>
       </form>
       <div className="find-credentials">
-        <a href="#" className="find-link">아이디 찾기</a>
+        <Link to="/FindIdForm" className="find-link">아이디 찾기</Link>
         <span>|</span>
-        <a href="#" className="find-link">비밀번호 찾기</a>
+        <Link to="/reset-password" className="find-link">비밀번호 재설정</Link>
         <span>|</span>
-        <a href="#" className="find-link">회원가입</a>
+        <Link to ="/SignupForm" className="find-link">회원가입</Link>
       </div>
     </div>
   );

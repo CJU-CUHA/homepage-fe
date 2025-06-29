@@ -23,12 +23,22 @@ form {
     flex-direction: column;
 }
 
-input, textarea {
+input {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
+    resize: none;
+ }
+
+textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    height: 150px;
+ }
 
 button {
     padding: 10px;
