@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './TextSlider.css';
 
 const messages = [
-  '보안 교육 수강신청 시작!',
+  '류현님의 Best of the Best 14기 합격을 축하드립니다!',
   'CTF 대회 안내 확인하세요.',
-  '스터디 팀원 모집 중!',
   '자료 공유 게시판을 이용해보세요.',
 ];
 
