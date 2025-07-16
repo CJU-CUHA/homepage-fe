@@ -34,9 +34,9 @@ function Login() {
         <button type="submit">로그인</button>
       </form>
       <div className="find-credentials">
-        <a href="#" className="find-link">아이디 찾기</a>
+        <Link to="/FindIdForm" className="find-link">아이디 찾기</Link>
         <span>|</span>
-        <a href="#" className="find-link">비밀번호 찾기</a>
+        <Link to="/reset-password" className="find-link">비밀번호 재설정</Link>
         <span>|</span>
         <Link to ="/SignupForm" className="find-link">회원가입</Link>
       </div>

@@ -1,4 +1,3 @@
-// src/components/PostItem.js
 import React from "react";
 
 function PostItem({ post, onDelete }) {

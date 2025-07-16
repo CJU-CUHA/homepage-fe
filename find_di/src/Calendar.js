@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Calendar.css';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
 
 const STORAGE_KEY = 'scheduleData';
 
@@ -10,14 +11,35 @@ const formatDate = (year, month, day) => {
   return `${year}-${mm}-${dd}`;
 };
 
-const Calendar = () => {
+const Calendar = ({ currentUser }) => {
   const today = new Date();
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [scheduleData, setScheduleData] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [noticeText, setNoticeText] = useState('');
+  const [title, setTitle] = useState('');
+  const [titleList, setTitleList] = useState([]);
+  const [subtitle, setSubtitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [userList, setUserList] = useState([]);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [selectedForDelete, setSelectedForDelete] = useState(new Set());
+
+  useEffect(() => {
+    fetch('/api/titles')
+      .then(res => res.json())
+      .then(data => setTitleList(data))
+      .catch(() => setTitleList(['Security', 'Programming', 'Meeting', 'Work']));
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => setUserList(data))
+      .catch(() => setUserList([{ name: currentUser?.name || 'Unknown' }]));
+  }, [currentUser]);
 
   useEffect(() => {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -28,54 +50,94 @@ const Calendar = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(scheduleData));
   }, [scheduleData]);
 
-  const handleDayClick = (dateStr) => {
-    setSelectedDate(dateStr);
-    setNoticeText(scheduleData[dateStr] || '');
-    setModalOpen(true);
+useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    const res = await fetch('/api/me', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (res.ok) {
+      const user = await res.json();
+      setAuthor(user.username || user.name);
+    }
   };
+
+  fetchUser();
+}, []);
 
   const handleSave = () => {
-    if (noticeText.trim()) {
-      setScheduleData((prev) => ({
-        ...prev,
-        [selectedDate]: noticeText.trim(),
-      }));
-      setModalOpen(false);
-      setNoticeText('');
-    }
-  };
-
-  const handleDelete = () => {
-    const confirmDelete = window.confirm('이 일정을 삭제하시겠습니까?');
-    if (confirmDelete) {
-      const { [selectedDate]: _, ...rest } = scheduleData;
-      setScheduleData(rest);
-      setModalOpen(false);
-      setNoticeText('');
-    }
-  };
-
-  const closeModal = () => {
+    if (!selectedDate || !title || !subtitle || !author) return;
+    const newEntry = { id: uuidv4(), title, subtitle, author };
+    setScheduleData(prev => ({
+      ...prev,
+      [selectedDate]: [...(prev[selectedDate] || []), newEntry],
+    }));
     setModalOpen(false);
-    setNoticeText('');
+    setTitle('');
+    setSubtitle('');
+    setAuthor(currentUser?.name || '');
   };
 
-  const handlePrevMonth = () => {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
+  const toggleSelectForDelete = (id) => {
+  setSelectedForDelete(prev => {
+    const newSet = new Set(prev);
+    if (newSet.has(id)) newSet.delete(id);
+    else newSet.add(id);
+    return newSet;
+  });
+};
+
+const handleBulkDelete = () => {
+  const newData = {};
+
+  for (const [date, entries] of Object.entries(scheduleData)) {
+    const filtered = entries.filter(entry => !selectedForDelete.has(entry.id));
+    if (filtered.length > 0) {
+      newData[date] = filtered;
     }
+  }
+
+  setScheduleData(newData);
+  setSelectedForDelete(new Set());
+};
+
+  const requestDelete = (dateStr, idx) => {
+    setDeleteTarget({ dateStr, idx });
+    setDeleteConfirmOpen(true);
   };
 
-  const handleNextMonth = () => {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
+  const confirmDelete = () => {
+    const { dateStr, idx } = deleteTarget;
+    const newArr = [...scheduleData[dateStr]];
+    newArr.splice(idx, 1);
+    const newData = { ...scheduleData };
+    if (newArr.length > 0) {
+      newData[dateStr] = newArr;
     } else {
-      setCurrentMonth(currentMonth + 1);
+      delete newData[dateStr];
     }
+    setScheduleData(newData);
+    setDeleteConfirmOpen(false);
+    setDeleteTarget(null);
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirmOpen(false);
+    setDeleteTarget(null);
+  };
+
+  const handleDayClick = (dateStr) => {
+    setSelectedDate(dateStr);
+    setTitle('');
+    setSubtitle('');
+    setAuthor(currentUser?.name || '');
+    setSelectedDate(dateStr);
+    setModalOpen(true);
   };
 
   const createCalendar = () => {
@@ -100,14 +162,13 @@ const Calendar = () => {
             currentYear === today.getFullYear() &&
             currentMonth === today.getMonth() &&
             day === today.getDate();
-          const hasEvent = !!scheduleData[dateStr];
+          const hasEvent = scheduleData[dateStr]?.length > 0;
 
           cells.push(
             <td
               key={j}
               onClick={() => handleDayClick(dateStr)}
               className={`${isToday ? 'today' : ''} ${hasEvent ? 'has-event' : ''}`}
-              title={scheduleData[dateStr] || ''}
               style={{ cursor: 'pointer' }}
             >
               {day}
@@ -123,96 +184,94 @@ const Calendar = () => {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
-      <>
-        <div
-          className="calendar-wrapper"
-          style={{
-            position: 'fixed',
-            top: '100px',
-            right: '30px',
-            zIndex: 1000
-          }}
-          ></div>
-      </>
-      <div
-        className="calendar-container"
-        style={{
-          backgroundColor: 'white',
-          padding: 20,
-          borderRadius: '12px',
-          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-          width: 'fit-content',
-        }}
-      >
-        <div className="calendar-box">
-          <div
-            className="calendar-header"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              fontSize: '20px',
-              marginBottom: '10px',
-            }}
-          >
-            <FaChevronLeft onClick={handlePrevMonth} style={{ cursor: 'pointer' }} title="이전 달" />
-            <span>
-              {currentYear}년 {currentMonth + 1}월
-            </span>
-            <FaChevronRight onClick={handleNextMonth} style={{ cursor: 'pointer' }} title="다음 달" />
-          </div>
-
-          <table className="calendar">
-            <thead>
-              <tr>
-                <th>일</th>
-                <th>월</th>
-                <th>화</th>
-                <th>수</th>
-                <th>목</th>
-                <th>금</th>
-                <th>토</th>
-              </tr>
-            </thead>
-            <tbody>{createCalendar()}</tbody>
-          </table>
-        </div>
+  <div className="fixed-calendar"> 
+    <div className="calendar-container">
+      <div className="calendar-header">
+        <FaChevronLeft onClick={() => {
+          if (currentMonth === 0) {
+            setCurrentMonth(11);
+            setCurrentYear(currentYear - 1);
+          } else setCurrentMonth(currentMonth - 1);
+        }} />
+        <span>{currentYear}년 {currentMonth + 1}월</span>
+        <FaChevronRight onClick={() => {
+          if (currentMonth === 11) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+          } else setCurrentMonth(currentMonth + 1);
+        }} />
       </div>
 
-      {modalOpen && (
-        <div
-          className="modal"
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#fff',
-            padding: '20px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-            zIndex: 1000,
-            minWidth: '300px',
-          }}
-        >
-          <h3>{selectedDate} 일정</h3>
-          <textarea
-            value={noticeText}
-            onChange={(e) => setNoticeText(e.target.value)}
-            rows={4}
-            style={{ width: '100%', marginBottom: '10px' }}
-          />
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <button onClick={handleSave}>저장</button>
-            <button onClick={handleDelete}>삭제</button>
-            <button onClick={closeModal}>닫기</button>
-          </div>
-        </div>
-      )}
+      <table className="calendar">
+        <thead>
+          <tr>
+            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+          </tr>
+        </thead>
+        <tbody>{createCalendar()}</tbody>
+      </table>
     </div>
+
+    <div className="schedule-list-container">
+  {Object.entries(scheduleData)
+    .sort(([a], [b]) => new Date(a) - new Date(b))  
+    .map(([date, entries]) => (
+      <div key={date} className="schedule-list">
+        <strong>{date}</strong>
+        {entries.map((entry) => (
+          <div key={entry.id} className="schedule-item">
+            <input
+              type="checkbox"
+              checked={selectedForDelete.has(entry.id)}
+              onChange={() => toggleSelectForDelete(entry.id)}
+            />
+            <span>{entry.title} - {entry.subtitle} ({entry.author})</span>
+          </div>
+        ))}
+      </div>
+    ))}
+  {selectedForDelete.size > 0 && (
+    <button onClick={handleBulkDelete}>선택된 일정 삭제</button>
+  )}
+</div>
+
+    {modalOpen && (
+      <div className="modal">
+        <h3>{selectedDate}</h3>
+        <select value={title} onChange={(e) => setTitle(e.target.value)}>
+          <option value="">제목 선택</option>
+          {titleList.map((t, i) => (
+            <option key={i} value={t}>{t}</option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          value={subtitle}
+          onChange={(e) => setSubtitle(e.target.value)}
+          placeholder="내용"
+        />
+
+        <p>등록자: {author}</p>
+
+        <div className="modal-actions">
+          <button onClick={handleSave}>저장</button>
+          <button onClick={() => setModalOpen(false)}>닫기</button>
+        </div>
+      </div>
+    )}
+
+    {deleteConfirmOpen && (
+      <div className="modal">
+        <p>이 일정을 삭제하시겠습니까?</p>
+        <div className="modal-actions">
+          <button onClick={confirmDelete}>확인</button>
+          <button onClick={cancelDelete}>취소</button>
+        </div>
+      </div>
+    )}
+  </div>
   );
-};
+}
 
 export default Calendar;

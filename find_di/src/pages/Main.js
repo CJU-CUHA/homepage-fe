@@ -1,14 +1,33 @@
-import React from 'react';
-import Calendar from '../Calendar';
+import React, { useState } from 'react';
 import './Main.css';
+import { useNavigate } from 'react-router-dom';
+import Calendar from '../Calendar';
+import Postboard from '../Postboard';
+import PostSummary from '../components/PostSummary';
+import TextSlider from '../components/TextSlider';
 
-const Main = () => {
+function Main() {
     return (
-       <div className="grid-container">
-        <div className="grid-item"></div>
-        <div className="grid-item"><Calendar /></div>
-       </div>
-    );
+  <div>
+    <div className="slider-section">
+      <TextSlider />
+    </div>
+    <div className="main-grid">
+      <div className="top-left">
+        <Postboard />
+      </div>
+      <div className="top-right">
+        <Calendar />
+      </div>
+      <div className="bottom-left">
+        <PostSummary />
+      </div>
+      <div className="bottom-right">
+      </div>
+    </div>
+  </div>
+);
+
 };
 
 export default Main;
