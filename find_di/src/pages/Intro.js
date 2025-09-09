@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Main from './Main';
 import './Intro.css';
-import cuhaLogo from '../img/cuha-logo.jpg';
+import cuhaLogo from '../img/cuha-logo.png';
 
 const Intro = () => {
   const introRef = useRef(null);

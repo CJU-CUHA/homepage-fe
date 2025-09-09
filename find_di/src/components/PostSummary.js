@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './PostSummary.css'; // 선택 사항: 스타일 분리
+import './PostSummary.css';
 
 function PostSummary() {
   const [posts, setPosts] = useState([]);

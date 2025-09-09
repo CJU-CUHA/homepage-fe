@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Login from './components/Login';
 import SignupForm from './SignupForm';
 import FindIdForm from './components/FindIdForm';
-import Footer from './components/Footer';
 import Intro from './pages/Intro';
 import Load from './Load';
 import PostBoard from './PostBoard';
@@ -65,7 +64,6 @@ function App() {
   
   return (
     <div className="app-container">
-      {/* 캔버스 컴포넌트의 위치는 그대로 유지 */}
       <canvas className="matrix-bg" ref={matrixCanvasRef}></canvas>
       
       <Router>
@@ -84,7 +82,6 @@ function App() {
             <Route path="/ctftime" element={<CTFTime />} />
           </Routes>
         </div>
-        <Footer />
       </Router>
     </div>
   );
