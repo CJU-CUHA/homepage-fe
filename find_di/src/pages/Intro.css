@@ -1,0 +1,38 @@
+.intro-container {
+    position: relative;
+    width: 100%;
+    height: 200vh;
+}
+
+.intro-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out; 
+    z-index: 1;
+    background-color: transparent;
+}
+
+.intro-section.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-section img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    opacity: 0.4;
+}
+
+.main-content-wrapper {
+    position: absolute;
+    top: 100vh; 
+    width: 100%;
+    z-index: 5;
+}

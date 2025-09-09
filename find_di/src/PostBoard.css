@@ -1,0 +1,279 @@
+/* 공통 스타일: 사이버펑크 테마 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+.post-board {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    border: 2px solid #00ff41;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    color: #00ff41;
+    position: relative;
+}
+
+.board-title {
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.board-subtitle {
+    font-size: 1rem;
+    color: #ff0080;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* 폼과 입력 필드 */
+.search-input,
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px;
+    background: #111;
+    border: 1px solid #ff0080;
+    color: #00ff41;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.search-input::placeholder,
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #aaa;
+}
+
+.file-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    border: 1px solid #ff0080;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-upload-label {
+    background-color: #ff0080;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.file-upload-label:hover {
+    background-color: #e60073;
+}
+
+.file-preview {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    color: #00ffff;
+    font-size: 0.9rem;
+}
+
+.remove-file-btn {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 1rem;
+    line-height: 1;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.remove-file-btn:hover {
+    background: #e60073;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #00ffff, #00ff41);
+    color: #000;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.submit-button:hover {
+    box-shadow: 0 0 15px #00ff41;
+}
+
+/* 게시물 목록 */
+.posts-container {
+    margin-top: 2rem;
+}
+
+.post-item {
+    border: 1px solid #00ff41;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: rgba(42, 42, 42, 0.5);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #00ff41;
+}
+
+.post-item h3 {
+    font-size: 1.2rem;
+    color: #00ffff;
+    margin-bottom: 5px;
+}
+
+.post-item p {
+    font-size: 0.9rem;
+    color: #ddd;
+    line-height: 1.5;
+}
+
+.file-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff0080;
+    color: #fff;
+    padding: 3px 8px;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.delete-button {
+    background: #ff0080;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    float: right;
+}
+
+.delete-button:hover {
+    background: #e60073;
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.7);
+}
+
+.no-posts-message {
+    text-align: center;
+    color: #ff0080;
+    font-size: 1.1rem;
+    margin-top: 30px;
+    text-shadow: 0 0 5px #ff0080;
+}
+
+/* 게시물 상세 모달 */
+.post-detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.post-detail-content {
+    background: #1a1a1a;
+    border: 2px solid #00ff41;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+    padding: 2rem;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    color: #00ff41;
+}
+
+.close-detail-btn {
+    background: #ff0080;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: all 0.3s ease;
+}
+
+.close-detail-btn:hover {
+    background: #e60073;
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.7);
+}
+
+.detail-title {
+    font-size: 1.8rem;
+    color: #00ffff;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.detail-content {
+    font-size: 1rem;
+    color: #ddd;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.detail-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #00ff41;
+    margin-top: 1rem;
+}
+
+.detail-download-link {
+    display: inline-block;
+    color: #ff0080;
+    text-decoration: none;
+    border-bottom: 1px dashed #ff0080;
+    margin-top: 1rem;
+}
+
+.detail-download-link:hover {
+    color: #00ffff;
+    border-bottom-color: #00ffff;
+}
