@@ -5,6 +5,7 @@ const messages = [
   '류현님의 Best of the Best 14기 합격을 축하드립니다!',
   'CTF 대회 안내 확인하세요.',
   '자료 공유 게시판을 이용해보세요.',
+  'commit soon',
 ];
 
 function TextSlider() {

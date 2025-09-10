@@ -2,19 +2,15 @@ import React, { useState } from 'react';
 import './Main.css';
 import { useNavigate } from 'react-router-dom';
 import Calendar from '../Calendar';
-import Postboard from '../Postboard';
+import PostBoard from '../PostBoard';
 import PostSummary from '../components/PostSummary';
-import TextSlider from '../components/TextSlider';
 
 function Main() {
     return (
   <div>
-    <div className="slider-section">
-      <TextSlider />
-    </div>
     <div className="main-grid">
       <div className="top-left">
-        <Postboard />
+        <PostBoard />
       </div>
       <div className="top-right">
         <Calendar />

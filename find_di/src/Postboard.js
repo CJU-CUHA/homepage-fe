@@ -1,170 +1,195 @@
-
 import React, { useState } from 'react';
-
 import React, { useState, useRef, useEffect } from 'react';
-
-import './pages/share.css';
+import './PostBoard.css';
 
 function PostBoard({ onlyWithFiles = false }) {
-  const [posts, setPosts] = useState([]);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [file, setFile] = useState(null);
-  const [selectedPost, setSelectedPost] = useState(null);
-  const fileInputRef = useRef(null);
-  const filteredPosts = posts.filter(post => {
-  const matchSearch =
-    post.title.includes(searchTerm) || post.content.includes(searchTerm);
-  const matchFile = !onlyWithFiles || (post.file && post.file.name);
-  return matchSearch && matchFile;
-});
+    const [posts, setPosts] = useState([]);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [file, setFile] = useState(null);
+    const [selectedPost, setSelectedPost] = useState(null);
+    const fileInputRef = useRef(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!title || !content) return;
+    // 로컬 스토리지에서 게시물 로드
+    useEffect(() => {
+        const storedPosts = JSON.parse(localStorage.getItem('postboard-posts')) || [];
+        setPosts(storedPosts);
+    }, []);
 
-    let fileUrl = null;
-    if (file) {
-      fileUrl = URL.createObjectURL(file);
-    }
+    // 게시물 변경 시 로컬 스토리지에 저장
+    useEffect(() => {
+        localStorage.setItem('postboard-posts', JSON.stringify(posts));
+    }, [posts]);
 
-    const newPost = { id: Date.now(), title, content, file, fileUrl };
-    setPosts([newPost, ...posts]);
-    setTitle('');
-    setContent('');
-    setFile(null);
+    const filteredPosts = posts.filter(post => {
+        const matchSearch =
+            post.title.toLowerCase().includes(searchTerm.toLowerCase()) || post.content.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchFile = !onlyWithFiles || (post.file && post.file.name);
+        return matchSearch && matchFile;
+    });
 
-    if (fileInputRef.current) fileInputRef.current.value = null;
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!title.trim() || !content.trim()) return;
 
-  const handleDelete = (id) => {
-    setPosts(posts.filter(post => post.id !== id));
+        let newFile = null;
+        let newFileUrl = null;
+        if (file) {
+            newFile = {
+                name: file.name,
+                type: file.type,
+                url: URL.createObjectURL(file)
+            };
+            newFileUrl = newFile.url;
+        }
 
-    if (selectedPost && selectedPost.id === id) {
-      setSelectedPost(null);
-    }
-  };
+        const newPost = { id: Date.now(), title, content, file: newFile, fileUrl: newFileUrl };
+        setPosts([newPost, ...posts]);
+        setTitle('');
+        setContent('');
+        setFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = null;
+    };
 
-  const handleRemoveFile = () => {
-    setFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = null;
-  };
+    const handleDelete = (id) => {
+        setPosts(posts.filter(post => post.id !== id));
+        if (selectedPost && selectedPost.id === id) {
+            setSelectedPost(null);
+        }
+    };
 
-  const handlePostClick = (post) => {
-    setSelectedPost(post);
-  };
+    const handleRemoveFile = () => {
+        setFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = null;
+    };
 
-  const handleCloseDetail = () => {
-    setSelectedPost(null);
-  };
+    const handlePostClick = (post) => {
+        setSelectedPost(post);
+    };
 
-  return (
-    <div>
-      <h1>share</h1>
-      <input
-        type="text"
-        placeholder="검색어를 입력하세요"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+    const handleCloseDetail = () => {
+        setSelectedPost(null);
+    };
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="제목"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="내용"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        />
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={(e) => setFile(e.target.files[0])}
-          accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.hwp"
-          />
-          {file && (
-            <div style={{ marginLeft: '10px' }}>
-              <span>{file.name}</span>
-              <button
-                type="button"
-                onClick={handleRemoveFile}
-                aria-label="파일 삭제"
-                style={{
-                  marginLeft: '5px',
-                  cursor: 'pointer',
-                  background: 'black',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '20px',
-                  height: '20px',
-                  lineHeight: '16px',
-                  padding: 0,
-                }}
-              >
-                ×
-              </button>
+    return (
+        <div className="post-board">
+            <h1 className="board-title">share</h1>
+            <p className="board-subtitle">자료 공유 & 대외활동</p>
+
+            <input
+                type="text"
+                className="search-input"
+                placeholder="검색어를 입력하세요"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            <form onSubmit={handleSubmit} className="post-form">
+                <input
+                    type="text"
+                    className="form-input"
+                    placeholder="제목"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                />
+                <textarea
+                    className="form-textarea"
+                    placeholder="내용"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                />
+                <div className="file-input-container">
+                    <label htmlFor="file-upload" className="file-upload-label">
+                        파일 선택
+                    </label>
+                    <input
+                        id="file-upload"
+                        type="file"
+                        className="file-input"
+                        ref={fileInputRef}
+                        onChange={(e) => setFile(e.target.files[0])}
+                        accept="image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt,.hwp"
+                    />
+                    {file && (
+                        <div className="file-preview">
+                            <span>{file.name}</span>
+                            <button
+                                type="button"
+                                onClick={handleRemoveFile}
+                                className="remove-file-btn"
+                                aria-label="파일 삭제"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    )}
+                </div>
+                <button type="submit" className="submit-button">
+                    게시하기
+                </button>
+            </form>
+
+            <div className="posts-container">
+                {filteredPosts.length === 0 && <p className="no-posts-message">게시물이 없습니다.</p>}
+                {filteredPosts.map(post => (
+                    <div
+                        key={post.id}
+                        className="post-item"
+                        onClick={() => handlePostClick(post)}
+                    >
+                        <h3>{post.title}</h3>
+                        <p>{post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}</p>
+                        {post.file && <span className="file-badge">첨부파일 있음</span>}
+                        <button
+                            className="delete-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(post.id);
+                            }}
+                        >
+                            삭제
+                        </button>
+                    </div>
+                ))}
             </div>
-          )}
-        <button type="submit">게시하기</button>
-      </form>
 
-      <div>
-            {filteredPosts.length === 0 && <p>게시물이 없습니다.</p>}
-      {filteredPosts.map(post => (
-        <div
-          key={post.id}
-          className="post"
-          style={{ cursor: 'pointer' }}
-          onClick={() => handlePostClick(post)}
-        >
-          <h3>{post.title}</h3>
-          <p>{post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}</p>
-          {post.file && <p>첨부파일: {post.file.name}</p>}
-          <button
-            className="delete-button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDelete(post.id);
-            }}
-          >
-            삭제
-          </button>
-        </div>
-      ))}
-    </div>
-    
-    {selectedPost && (
-      <div className="post-detail" style={{ border: '1px solid #ccc', padding: '10px', marginTop: '20px' }}>
-        <button onClick={handleCloseDetail}>뒤로가기</button>
-        <h2>{selectedPost.title}</h2>
-        <p>{selectedPost.content}</p>
-        {selectedPost.file && (
-          <>
-            {selectedPost.file.type.startsWith('image/') ? (
-              <img
-                src={selectedPost.fileUrl}
-                alt={selectedPost.file.name}
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
-            ) : (
-              <a href={selectedPost.fileUrl} download={selectedPost.file.name} target="_blank" rel="noreferrer">
-                첨부파일 다운로드: {selectedPost.file.name}
-              </a>
+            {selectedPost && (
+                <div className="post-detail-modal">
+                    <div className="post-detail-content">
+                        <button onClick={handleCloseDetail} className="close-detail-btn">
+                            뒤로가기
+                        </button>
+                        <h2 className="detail-title">{selectedPost.title}</h2>
+                        <p className="detail-content">{selectedPost.content}</p>
+                        {selectedPost.file && (
+                            <div className="detail-file">
+                                {selectedPost.file.type.startsWith('image/') ? (
+                                    <img
+                                        src={selectedPost.fileUrl}
+                                        alt={selectedPost.file.name}
+                                        className="detail-image"
+                                    />
+                                ) : (
+                                    <a
+                                        href={selectedPost.fileUrl}
+                                        download={selectedPost.file.name}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="detail-download-link"
+                                    >
+                                        첨부파일 다운로드: {selectedPost.file.name}
+                                    </a>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
             )}
-          </>
-        )}
-      </div>
-    )}
-  </div>
- );
+        </div>
+    );
 }
 
 export default PostBoard;
