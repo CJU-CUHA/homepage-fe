@@ -59,7 +59,6 @@ function Header() {
   <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
  </header>
 </div>
-
        {modalOpen && (
         <div className="modal-backdrop">
           <div className="modal">

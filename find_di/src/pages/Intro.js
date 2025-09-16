@@ -28,7 +28,6 @@ const Intro = () => {
 
   return (
     <div className="intro-container">
-      {/* Intro section with the image */}
       <div 
         className={`intro-section ${scrolled ? 'hide' : ''}`}
         ref={introRef}
@@ -36,7 +35,6 @@ const Intro = () => {
         <img src={cuhaLogo} alt="CUHA Digital Security" />
       </div>
 
-      {/* Main content section, which appears on scroll */}
       <div className="main-content-wrapper">
         <Main />
       </div>

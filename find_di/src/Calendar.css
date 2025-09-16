@@ -67,12 +67,14 @@
     border-collapse: collapse;
     font-size: 0.9rem;
     text-align: center;
+    background: #000;
 }
 
 .calendar th, .calendar td {
     border: 1px solid #00ff41;
     padding: 10px 0;
     text-align: center;
+    background-color: #000;
 }
 
 .calendar th {

@@ -256,7 +256,7 @@ const Calendar = () => {
                   isSelected={selectedForDelete.has(entry.id)}
                 />
               ))}
-            </div>
+            </div>
           ))}
          {selectedForDelete.size > 0 && (
          <button onClick={handleBulkDelete} className="bulk-delete-btn">선택된 일정 삭제</button>

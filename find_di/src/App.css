@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double:wght@100..900&display=swap');
+
 .App {
   text-align: center;
 }
@@ -30,6 +32,7 @@
     transform: rotate(360deg);
   }
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -38,8 +41,8 @@
  body {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
   padding-top: 80px;
+  font-family: 'Bitcount Grid Double';
   text-align: center;
 }
 
@@ -142,19 +145,24 @@
   align-items: center;
   gap: 10px;
   white-space: nowrap;
+  font-family: 'Bitcount Grid Double';
 }
 
 .auth a {
   color: black;
   font-weight: 500;
+  font-family: 'Bitcount Grid Double';
 }
 
 .auth span {
   margin-left: 0px;
   cursor: pointer;
+  font-family: 'Bitcount Grid Double';
 }
 
 .sep {
   color: #999;
   margin: 0 5px;
+  font-family: 'Bitcount Grid Double';
 }
+
