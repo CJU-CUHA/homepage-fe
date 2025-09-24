@@ -37,7 +37,11 @@ function Header() {
         <header className="main-banner">
         <div className="logo">
           <Link to="/">
-            <img src={cuhaLogo} alt="logo" />
+            <img 
+              src={cuhaLogo} 
+              alt="logo" 
+              draggable="false"
+            />
           </Link>
         </div>
 
